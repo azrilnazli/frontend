@@ -20,5 +20,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::resource('users','App\Http\Controllers\UserController');
 Route::post('/users/search', [App\Http\Controllers\UserController::class, 'search'])->name('users.search');
+
+Route::resource('videos','App\Http\Controllers\VideoController');
+Route::post('/videos/search', [App\Http\Controllers\VideoController::class, 'search'])->name('videos.search');

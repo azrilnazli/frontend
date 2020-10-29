@@ -54,4 +54,12 @@ class User extends Authenticatable
                 ->times(50)
                 ->create();
     }
+
+    /**
+     * User HasMany Videos
+     */
+    public function videos()
+    {
+        return $this->hasMany('App\Models\Video');
+    }    
 }
