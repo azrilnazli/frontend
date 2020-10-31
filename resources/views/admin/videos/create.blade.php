@@ -17,7 +17,23 @@
                 <div class="card-header" style="background-color: #dee2e6">{{ __('Create') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('videos.store') }}">
+
+
+                @if ($errors->any())
+                
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+
+<!-- Create Post Form -->
+
+
+                    <form method="POST" action="{{ route('videos.store') }}" enctype="multipart/form-data">
                         @csrf
 
 
@@ -25,7 +41,7 @@
                             <label for="title" class="col-md-4 col-form-label text-md-right">{{ __('Title') }}</label>
 
                             <div class="col-md-6">
-                                <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" required autocomplete="title" autofocus>
+                                <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" required autocomplete="title" >
 
                                 @error('title')
                                     <span class="invalid-feedback" role="alert">
@@ -48,6 +64,31 @@
                                 @enderror
                             </div>
                         </div>
+ 
+
+
+                        <div class="form-group row">
+                            <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Video') }}</label>
+
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                                    </div>
+                                    <div class="custom-file">
+                                        <input required type="file" class="form-control @error('file') is-invalid @enderror" name="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                        <label class="custom-file-label" for="inputGroupFile01">Choose video ( mp4 or mov only )</label>
+                                    </div>
+                                </div>
+
+                                @error('file')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">

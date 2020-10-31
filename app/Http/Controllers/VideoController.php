@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Video;
+use App\Jobs\ProcessVideo;
 use Illuminate\Http\Request;
 use Auth;
+use File;
 
 class VideoController extends Controller
 {
@@ -46,21 +48,42 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request['title']);
-        $request->validate([
-           
+        $rules = [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:1000'],
-
-        ]);
+            'file' => ['required', 'mimes:mp4,mov,MP4,MOV'], 
+        ];
+    
+        $customMessages = [
+            'file.required' => 'The video :attribute field is required.'
+        ];
+    
+        $this->validate($request, $rules, $customMessages);
 
         //User::create($request->all());
 
-        Video::create([
+        $video = Video::create([
             'user_id' => Auth::user()->id, 
             'title' => $request['title'],
             'description' => $request['description'],
         ]);
+
+        if($request->hasFile('file')){
+
+            $file =  $request['file'];
+            $filename = $file->getClientOriginalName();
+            $path = public_path().'/uploads/' . $video->id;
+            File::makeDirectory($path, $mode = 0777, true, true); 
+            File::makeDirectory($path . '/videos', $mode = 0777, true, true);
+            File::makeDirectory($path . '/images', $mode = 0777, true, true);
+            File::makeDirectory($path . '/logs', $mode = 0777, true, true);
+            $file->move($path . '/videos', 'original.mp4');
+
+            # dispatch job here
+            //dispatch(new ProcessVideo($video->id));
+            ProcessVideo::dispatch($video->id);
+        }
+
         return redirect('videos')->with('success','Video Created Successfully');
     }
 
@@ -72,7 +95,8 @@ class VideoController extends Controller
      */
     public function show(Video $video)
     {
-        //
+        $data =  Video::find($video->id);
+        return view('admin.videos.show',compact(['data']));
     }
 
     public function edit($id)
@@ -113,4 +137,6 @@ class VideoController extends Controller
         
         return view('admin.videos.index',compact(['data']));
     }
+
+
 }
