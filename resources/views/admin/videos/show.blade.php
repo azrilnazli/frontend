@@ -54,7 +54,7 @@
 
                     <div class="form-group row mb-0 mt-2">
                             
-                            <a href="{{ route('users.index')}}" class="btn btn-dark ml-2">	&laquo; Back</a>
+                            <a href="{{ route('videos.index')}}" class="btn btn-dark ml-2">	&laquo; Back</a>
                 
                     </div>
                   

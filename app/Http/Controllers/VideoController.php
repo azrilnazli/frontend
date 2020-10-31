@@ -123,6 +123,7 @@ class VideoController extends Controller
     public function destroy($id)
     {
         Video::where('id',$id)->delete();
+        File::deleteDirectory(public_path('uploads/'. $id));
         return redirect()->back()->with('success','Delete Successfully');
     }
 
