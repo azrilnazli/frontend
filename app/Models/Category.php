@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'user_id',
+        'title',
+        'description',
+    ];
+
+    /**
+     * Get the user that owns the video.
+     */
+    public function video()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }

@@ -51,7 +51,31 @@
                     );
                 </script>
      -->           
+<h2>Streaming Playout</h2>     
+<script type="text/javascript" src="//player.wowza.com/player/latest/wowzaplayer.min.js"></script>
+                    <div id="playerElement" style="width:100%; height:0; padding:0 0 56.25% 0"></div>
+                    <script type="text/javascript">
+                    WowzaPlayer.create("playerElement",
+                            {
+                                "license":"PLAY1-hZeDc-CnBKQ-PM8MY-C9QkZ-cu899",
+                                "sources":[
+                                            {
+                                                "sourceURL":"http://localhost:8081/vod/{{ $data->id }}/videos/smil:stream.smil/playlist.m3u8"
+                                            },
+                                        ],
 
+                                "title":"",
+                                "description":"",
+                                "autoPlay":false,
+                                "mute":false,
+                                "volume":75
+                            }
+                    );
+                </script>
+
+<hr />
+<br />
+<h2> Direct File Play [ original.mp4 ]</h2>
 <link href="https://vjs.zencdn.net/7.8.4/video-js.css" rel="stylesheet" />
 
 <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
