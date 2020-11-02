@@ -51,7 +51,7 @@ class VideoController extends Controller
         $rules = [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:1000'],
-            'file' => ['required', 'mimes:mp4,mov,MP4,MOV'], 
+            //'file' => ['required', 'mimes:mp4,mov,MP4,MOV'], 
         ];
     
         $customMessages = [
@@ -69,19 +69,23 @@ class VideoController extends Controller
         ]);
 
         if($request->hasFile('file')){
-
             $file =  $request['file'];
-            $filename = $file->getClientOriginalName();
-            $path = public_path().'/uploads/' . $video->id;
-            File::makeDirectory($path, $mode = 0777, true, true); 
-            File::makeDirectory($path . '/videos', $mode = 0777, true, true);
-            File::makeDirectory($path . '/images', $mode = 0777, true, true);
-            File::makeDirectory($path . '/logs', $mode = 0777, true, true);
-            $file->move($path . '/videos', 'original.mp4');
+            $mime = $file->getMimeType();
+            if ($mime == "video/x-flv" || $mime == "video/mp4" || $mime == "application/x-mpegURL" || $mime == "video/MP2T" || $mime == "video/3gpp" || $mime == "video/quicktime" || $mime == "video/x-msvideo" || $mime == "video/x-ms-wmv") 
+            {
+           
+                $filename = $file->getClientOriginalName();
+                $path = public_path().'/uploads/' . $video->id;
+                File::makeDirectory($path, $mode = 0777, true, true); 
+                File::makeDirectory($path . '/videos', $mode = 0777, true, true);
+                File::makeDirectory($path . '/images', $mode = 0777, true, true);
+                File::makeDirectory($path . '/logs', $mode = 0777, true, true);
+                $file->move($path . '/videos', 'original.mp4');
 
-            # dispatch job here
-            //dispatch(new ProcessVideo($video->id));
-            ProcessVideo::dispatch($video->id);
+                # dispatch job here
+                //dispatch(new ProcessVideo($video->id));
+                ProcessVideo::dispatch($video->id);
+            }
         }
 
         return redirect('videos')->with('success','Video Created Successfully');
@@ -115,6 +119,28 @@ class VideoController extends Controller
         $data['title'] = $request->input('title');
         $data['description'] = $request->input('description');
 
+        
+
+        // user request to replace current video
+        if($request->hasFile('file')){
+            $file =  $request['file'];
+            $mime = $file->getMimeType();
+            if ($mime == "video/x-flv" || $mime == "video/mp4" || $mime == "application/x-mpegURL" || $mime == "video/MP2T" || $mime == "video/3gpp" || $mime == "video/quicktime" || $mime == "video/x-msvideo" || $mime == "video/x-ms-wmv") 
+            {
+           
+                $path = public_path().'/uploads/' . $id;
+                File::deleteDirectory(public_path('uploads/'. $id . '/videos'));
+                File::makeDirectory($path . '/videos', $mode = 0777, true, true);
+                $filename = $file->getClientOriginalName();
+                $path = public_path().'/uploads/' . $id;
+                $file->move($path . '/videos', 'original.mp4');
+
+                # dispatch job here
+                //dispatch(new ProcessVideo($video->id));
+                $data['is_ready'] = 0;
+                ProcessVideo::dispatch($id);
+            }
+        }
         Video::where('id',$id)->update( $data);
         return redirect('videos')->with('success','Update Successfully');
         

@@ -34,24 +34,30 @@
                 <table class="table table-bordered table-condensed table-striped">
                     <thead>
 
-                        <th width="5%">ID</th>
-                        <th width="8%">TITLE</th>
-                        <th width="*">DESCRIPTION</th>
-                        <th width="20%">IS READY ?</th>
+                        <th width="*">ID</th>
+                        <th width="20%">TITLE</th>
+                        <th width="50%">DESCRIPTION</th>
+                        <th width="*"><i class="fas fa-video"></i></th>
 
-                        <th>ACTION</th>
+                        <th width="20%">ACTION</th>
                     </thead>
 
                     <tbody>
                         @foreach($data as $row)
-                        <tr>
+                        <tr >
 
                             <td>{{$row->id }}</td>
                             <td>{{$row->title }}</td>
                             <td>{{$row->description }}</td>
-                            <td>{{$row->is_ready }}</td>
+                            <td>
+                                @if( $row->is_ready == 1 ) 
+                                    <i class="fas fa-check"></i>
+                                @else
+                                    <i class="fas fa-spinner fa-pulse"></i>
+                                @endif
+                            </td>
 
-                            <td width="20%">
+                            <td>
                                 
 
                                 <form action="{{ route('videos.destroy', $row->id)}}" method="post">
