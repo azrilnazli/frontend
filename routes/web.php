@@ -28,9 +28,10 @@ Route::resource('videos','App\Http\Controllers\VideoController');
 Route::post('/videos/search', [App\Http\Controllers\VideoController::class, 'search'])->name('videos.search');
 
 Route::get('/videos/poster/{id}', [App\Http\Controllers\VideoController::class, 'poster'])->name('videos.poster');
-Route::post('/videos/poster_store/{id}', [App\Http\Controllers\VideoController::class, 'store_poster'])->name('videos.store_poster');
+Route::post('/videos/store_poster/{id}', [App\Http\Controllers\VideoController::class, 'store_poster'])->name('videos.store_poster');
 
-Route::get('/videos/trailer', [App\Http\Controllers\VideoController::class, 'trailer'])->name('videos.trailer');
+Route::get('/videos/trailer/{id}', [App\Http\Controllers\VideoController::class, 'trailer'])->name('videos.trailer');
+Route::post('/videos/store_trailer/{id}', [App\Http\Controllers\VideoController::class, 'store_trailer'])->name('videos.store_trailer');
 
 
 Route::resource('categories','App\Http\Controllers\CategoryController');

@@ -61,7 +61,7 @@
                                 
                                 <form action="{{ route('videos.destroy', $row->id)}}" method="post">
                                     @csrf @method('DELETE')
-                                    <a href="{{ route('videos.show', $row->id)}}" class="btn btn-primary ">Asset</a>
+                                    <a href="{{ route('videos.show', $row->id)}}" class="btn btn-primary ">Video</a>
                                     <a href="{{ route('videos.poster', $row->id)}}" class="btn btn-primary">Poster</a>
                                     <a href="{{ route('videos.trailer', $row->id)}}" class="btn btn-primary">Trailer</a>
                                     <a href="{{ route('videos.edit', $row->id)}}" class="btn btn-success">Edit</a>

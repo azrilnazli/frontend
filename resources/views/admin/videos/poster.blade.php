@@ -11,7 +11,8 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/home">{{ __('Home') }}</a></li>
                     <li class="breadcrumb-item"><a href="/videos">{{ __('Videos') }}</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ __('Show') }}</li>
+                    <li class="breadcrumb-item"><a href="/videos/{{ $data->id }}">{{ $data->title }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ __('Poster') }}</li>
                 </ol>
             </nav>
 

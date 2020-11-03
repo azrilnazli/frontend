@@ -9,7 +9,8 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/home">{{ __('Home') }}</a></li>
                     <li class="breadcrumb-item"><a href="/videos">{{ __('Videos') }}</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ __('Show') }}</li>
+                    <li class="breadcrumb-item"><a href="/videos/{{ $data->id }}">{{ $data->title }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ __('Main Video') }}</li>
                 </ol>
             </nav>
             <div class="card">
@@ -50,8 +51,7 @@
                             }
                     );
                 </script>
-     -->           
-<h2>Streaming Playout</h2>     
+     -->               
 <script type="text/javascript" src="//player.wowza.com/player/latest/wowzaplayer.min.js"></script>
                     <div id="playerElement" style="width:100%; height:0; padding:0 0 56.25% 0"></div>
                     <script type="text/javascript">
@@ -60,7 +60,7 @@
                                 "license":"PLAY1-hZeDc-CnBKQ-PM8MY-C9QkZ-cu899",
                                 "sources":[
                                             {
-                                                "sourceURL":"http://localhost:8081/vod/{{ $data->id }}/videos/mp4:original.mp4/playlist.m3u8"
+                                                "sourceURL":"http://localhost:8081/vod/{{ $data->id }}/videos/smil:stream.smil/playlist.m3u8"
                                             },
                                         ],
 
@@ -68,17 +68,26 @@
                                 "description":"",
                                 "autoPlay":false,
                                 "mute":false,
-                                "volume":75
+                                "volume":75,
+                                @if (file_exists(public_path('/uploads/' .$data->id. '/images/file-2-small.png')))
+                                    "posterFrameURL":"/uploads/{{ $data->id }}/images/file-2-small.png",
+                                    "endPosterFrameURL":"/uploads/{{ $data->id }}/images/file-2-small.png",
+                                    "uiPosterFrameFillMode":"fit"
+                                @else 
+                                    "posterFrameURL":"/src/poster/trailer.png",
+                                    "endPosterFrameURL":"/src/poster/trailer.png",
+                                    "uiPosterFrameFillMode":"fit"
+                                @endif   
                             }
                     );
                 </script>
-
+<!--
 <hr />
 <br />
 <h2> Direct File Play [ original.mp4 ]</h2>
 <link href="https://vjs.zencdn.net/7.8.4/video-js.css" rel="stylesheet" />
 
-<!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+
 <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
 
 <video
@@ -99,7 +108,7 @@
     </p>
 </video>
 <script src="https://vjs.zencdn.net/7.8.4/video.js"></script>
-
+-->
 
                     <div class="form-group row mb-0 mt-2">
                             

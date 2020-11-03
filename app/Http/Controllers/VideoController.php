@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Video;
 use App\Jobs\ProcessVideo;
+use App\Jobs\ProcessTrailer;
 use Illuminate\Http\Request;
 use Auth;
 use File;
@@ -77,10 +78,10 @@ class VideoController extends Controller
            
                 $filename = $file->getClientOriginalName();
                 $path = public_path().'/uploads/' . $video->id;
-                File::makeDirectory($path, $mode = 0777, true, true); 
-                File::makeDirectory($path . '/videos', $mode = 0777, true, true);
-                File::makeDirectory($path . '/images', $mode = 0777, true, true);
-                File::makeDirectory($path . '/logs', $mode = 0777, true, true);
+                    File::makeDirectory($path, $mode = 0777, true, true); 
+                    File::makeDirectory($path . '/videos', $mode = 0777, true, true);
+                    File::makeDirectory($path . '/images', $mode = 0777, true, true);
+                    File::makeDirectory($path . '/trailer', $mode = 0777, true, true);
                 $file->move($path . '/videos', 'original.mp4');
 
                 # dispatch job here
@@ -201,6 +202,50 @@ class VideoController extends Controller
         }
 
         return redirect()->route('videos.poster', ['id' => $id])->with('success','Image upload success');
+    }
+
+    public function trailer($id)
+    {
+        $data = Video::find($id);
+        return view('admin.videos.trailer',compact(['data']));
+    }
+
+
+    public function store_trailer(Request $request, $id)
+    {
+ 
+        $request->validate([
+            'file-1' => ['mimes:mov,mp4,m4v'],
+            'file-2' => ['mimes:png,jpg,jpeg'],
+        ]);
+        
+
+        // upload trailer
+        if($request->hasFile('file-1')){
+            $file =  $request['file-1'];
+            $mime = $file->getMimeType();
+            if ($mime == "video/x-flv" || $mime == "video/mp4" || $mime == "application/x-mpegURL" || $mime == "video/MP2T" || $mime == "video/3gpp" || $mime == "video/quicktime" || $mime == "video/x-msvideo" || $mime == "video/x-ms-wmv") 
+            {
+           
+                $path = public_path().'/uploads/' . $id;
+                $file->move($path . '/trailer/', 'original.mp4');
+
+                # dispatch job here
+                ProcessTrailer::dispatch($id);
+            }
+        }
+
+        // upload poster
+        if($request->hasFile('file-2'))
+        {
+            $file =  $request['file-2'];
+            $path = public_path().'/uploads/' . $id;
+            $file->move($path . '/images/', 'file-2');
+            Image::make( $path . '/images/file-2')->resize(640, 360)->save( $path . '/images/trailer.png');
+        }
+
+
+        return redirect()->route('videos.trailer', ['id' => $id])->with('success','Trailer upload success');
     }
 
 

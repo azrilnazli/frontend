@@ -9,6 +9,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/home">{{ __('Home') }}</a></li>
                     <li class="breadcrumb-item"><a href="/videos">{{ __('Videos') }}</a></li>
+                    <li class="breadcrumb-item"><a href="/videos/{{ $data->id }}">{{ $data->title }}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{ __('Edit') }}</li>
                 </ol>
             </nav>
@@ -86,7 +87,16 @@
                                             "description":"",
                                             "autoPlay":false,
                                             "mute":false,
-                                            "volume":75
+                                            "volume":75,
+                                            @if (file_exists(public_path('/uploads/' .$data->id. '/images/file-2-small.png')))
+                                                "posterFrameURL":"/uploads/{{ $data->id }}/images/file-2-small.png",
+                                                "endPosterFrameURL":"/uploads/{{ $data->id }}/images/file-2-small.png",
+                                                "uiPosterFrameFillMode":"fit"
+                                            @else 
+                                                "posterFrameURL":"/src/poster/trailer.png",
+                                                "endPosterFrameURL":"/src/poster/trailer.png",
+                                                "uiPosterFrameFillMode":"fit"
+                                            @endif                                               
                                         }
                                 );
                             </script>
