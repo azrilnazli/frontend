@@ -32,18 +32,12 @@ class CategoryController extends Controller
         return view('admin.categories.index',compact(['data']));
     }
 
-    private function getRoles()
-    {
-        $result = DB::select("SHOW COLUMNS FROM `categories` LIKE 'role';");
-        $regex = "/'(.*?)'/";
-        preg_match_all( $regex , $result[0]->Type, $enum_array );
-        return $enum_fields = $enum_array[1];
-    }
+
 
     public function create()
     {
 
-        return view('admin.categories.create')->with('roles', $this->getRoles() );
+        return view('admin.categories.create')->with('roles');
     }
 
     public function store(Request $request)

@@ -34,12 +34,12 @@
                 <table class="table table-bordered table-condensed table-striped">
                     <thead>
 
-                        <th width="*">ID</th>
-                        <th width="20%">TITLE</th>
-                        <th width="50%">DESCRIPTION</th>
-                        <th width="*"><i class="fas fa-video"></i></th>
+                        <th width="1%">ID</th>
+                        <th width="62.5%">TITLE</th>
+                  
+                        <th width="1%"><i class="fas fa-video"></i></th>
 
-                        <th width="20%">ACTION</th>
+                        <th width="40%">ACTION</th>
                     </thead>
 
                     <tbody>
@@ -48,7 +48,7 @@
 
                             <td>{{$row->id }}</td>
                             <td>{{$row->title }}</td>
-                            <td>{{$row->description }}</td>
+                    
                             <td>
                                 @if( $row->is_ready == 1 ) 
                                     <i class="fas fa-check"></i>
@@ -59,11 +59,12 @@
 
                             <td>
                                 
-
                                 <form action="{{ route('videos.destroy', $row->id)}}" method="post">
                                     @csrf @method('DELETE')
-                                    <a href="{{ route('videos.show', $row->id)}}" class="btn btn-primary">Show</a>
-                                    <a href="{{ route('videos.edit', $row->id)}}" class="btn btn-secondary">Edit</a>
+                                    <a href="{{ route('videos.show', $row->id)}}" class="btn btn-primary ">Asset</a>
+                                    <a href="{{ route('videos.poster', $row->id)}}" class="btn btn-primary">Poster</a>
+                                    <a href="{{ route('videos.trailer', $row->id)}}" class="btn btn-primary">Trailer</a>
+                                    <a href="{{ route('videos.edit', $row->id)}}" class="btn btn-success">Edit</a>
                                     <button class="btn btn-danger" type="submit">Delete</button>
                                 </form>
 

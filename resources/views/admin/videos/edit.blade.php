@@ -124,7 +124,7 @@
                             <div class="col-md-6 offset-md-4">
                                 <a href="{{ route('videos.index')}}" class="btn btn-dark ml-2">	&laquo; Back</a>
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Create') }}
+                                    {{ __('Update') }}
                                 </button>
                             </div>
                         </div>

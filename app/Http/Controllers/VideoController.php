@@ -8,6 +8,7 @@ use App\Jobs\ProcessVideo;
 use Illuminate\Http\Request;
 use Auth;
 use File;
+use Image;
 
 class VideoController extends Controller
 {
@@ -133,7 +134,7 @@ class VideoController extends Controller
                 File::makeDirectory($path . '/videos', $mode = 0777, true, true);
                 $filename = $file->getClientOriginalName();
                 $path = public_path().'/uploads/' . $id;
-                $file->move($path . '/videos', 'original.mp4');
+                $file->move($path . '/videos/', 'original.mp4');
 
                 # dispatch job here
                 //dispatch(new ProcessVideo($video->id));
@@ -163,6 +164,43 @@ class VideoController extends Controller
         ->paginate(10)->setPath('videos');
         
         return view('admin.videos.index',compact(['data']));
+    }
+
+    public function poster($id)
+    {
+        $data = Video::find($id);
+        return view('admin.videos.poster',compact(['data']));
+    }
+
+
+    public function store_poster(Request $request, $id)
+    {
+        $request->validate([
+            'file-1' => ['mimes:png,jpg,jpeg'],
+            'file-2' => ['mimes:png,jpg,jpeg'],
+        ]);
+      
+        // upload poster 
+        if($request->hasFile('file-1'))
+        {
+            $file =  $request['file-1'];
+            $path = public_path().'/uploads/' . $id;
+            $file->move($path . '/images/', 'file-1');
+            Image::make( $path . '/images/file-1')->fit(400, 600)->save( $path . '/images/file-1.png');
+            Image::make( $path . '/images/file-1')->fit(200, 300)->save( $path . '/images/file-1-small.png');
+
+        }
+
+        if($request->hasFile('file-2'))
+        {
+            $file =  $request['file-2'];
+            $path = public_path().'/uploads/' . $id;
+            $file->move($path . '/images/', 'file-2');
+            Image::make( $path . '/images/file-2')->resize(1920, 1080)->save( $path . '/images/file-2.png');
+            Image::make( $path . '/images/file-2')->resize(640, 360)->save( $path . '/images/file-2-small.png');
+        }
+
+        return redirect()->route('videos.poster', ['id' => $id])->with('success','Image upload success');
     }
 
 

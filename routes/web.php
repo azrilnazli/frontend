@@ -26,3 +26,12 @@ Route::post('/users/search', [App\Http\Controllers\UserController::class, 'searc
 
 Route::resource('videos','App\Http\Controllers\VideoController');
 Route::post('/videos/search', [App\Http\Controllers\VideoController::class, 'search'])->name('videos.search');
+
+Route::get('/videos/poster/{id}', [App\Http\Controllers\VideoController::class, 'poster'])->name('videos.poster');
+Route::post('/videos/poster_store/{id}', [App\Http\Controllers\VideoController::class, 'store_poster'])->name('videos.store_poster');
+
+Route::get('/videos/trailer', [App\Http\Controllers\VideoController::class, 'trailer'])->name('videos.trailer');
+
+
+Route::resource('categories','App\Http\Controllers\CategoryController');
+Route::post('/categories/search', [App\Http\Controllers\CategoryController::class, 'search'])->name('categories.search');
