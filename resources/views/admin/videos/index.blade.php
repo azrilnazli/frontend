@@ -38,7 +38,7 @@
                         <th width="70.5%">TITLE</th>
              
 
-                        <th width="40%">ACTION</th>
+                        <th width="40%">MODULE</th>
 
                         <th width="1%" vAlign="centre">DELETE</th>
                     </thead>
@@ -47,9 +47,9 @@
                         @foreach($data as $row)
                         <tr >
 
-                            <td>{{$row->id }}</td>
+                            <td> <span class="badge-pill badge-dark">{{$row->id }}</span></td>
                             <td>
-                                <a href="{{ route('videos.show', $row->id)}}" ><p>{{$row->title }}</p></a>
+                                <a href="{{ route('videos.show', $row->id)}}" ><p class="h5">{{$row->title }}</p></a>
                             </td>
        
 

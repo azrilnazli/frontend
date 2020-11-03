@@ -202,7 +202,7 @@ class VideoController extends Controller
             $path = public_path().'/uploads/' . $id;
             $file->move($path . '/images/', 'file-2');
             Image::make( $path . '/images/file-2')->resize(1920, 1080)->save( $path . '/images/file-2.png');
-            Image::make( $path . '/images/file-2')->resize(640, 360)->save( $path . '/images/video-poster.png');
+            Image::make( $path . '/images/file-2')->resize(640, 360)->save( $path . '/images/file-2-small.png');
         }
 
         return redirect()->route('videos.poster', ['id' => $id])->with('success','Image upload success');
