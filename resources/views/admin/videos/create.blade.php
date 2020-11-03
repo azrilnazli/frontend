@@ -2,6 +2,8 @@
 
 @section('content')
 <div class="container">
+    <form method="POST" action="{{ route('videos.store') }}">
+    @csrf
     <div class="row justify-content-center">
         <div class="col-md-12">
 
@@ -9,99 +11,84 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/home">{{ __('Home') }}</a></li>
                     <li class="breadcrumb-item"><a href="/videos">{{ __('Videos') }}</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ __('Create') }}</li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ __('Metadata') }}</li>
                 </ol>
             </nav>
 
-            <div class="card">
-                <div class="card-header" style="background-color: #dee2e6">{{ __('Create') }}</div>
+            
 
-                <div class="card-body">
+            @if ($message = Session::get('success'))
+                <div class="alert alert-success" role="alert">
+                    {{ $message }}
+                </div>
+            @endif
 
 
-                @if ($errors->any())
+            @if ($errors->any())
                 
-                <div class="alert alert-danger">
+                <div class="alert alert-danger" role="alert">
                     <ul>
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
                 </div>
-                @endif
-
-<!-- Create Post Form -->
+            @endif
 
 
-                    <form method="POST" action="{{ route('videos.store') }}" enctype="multipart/form-data">
-                        @csrf
+            <div class="card">
+                <div class="card-header" style="background-color: #dee2e6"><button type="button" class="btn btn-primary btn-lg">Metadata</button></div>
+                <div class="card-body" style="background-color: #eaeaea">
 
-
+                    <dt class="col-sm-3">Title</dt>
+                    <dd class="col-sm-9">
                         <div class="form-group row">
-                            <label for="title" class="col-md-4 col-form-label text-md-right">{{ __('Title') }}</label>
+                            <div class="col-md-9">
+                                    <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" required autocomplete="title" >
 
-                            <div class="col-md-6">
-                                <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" required autocomplete="title" >
-
-                                @error('title')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                    @error('title')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                             </div>
                         </div>
+                    </dd>
 
+                    <dt class="col-sm-3">Description</dt>
+                    <dd class="col-sm-9">
                         <div class="form-group row">
-                            <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
 
-                            <div class="col-md-6">
-                                <!--<input id="description" type="description" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" required autocomplete="description"> -->
-                                <textarea class="form-control @error('description') is-invalid @enderror" rows="8" id="description" name="description" style="resize:none" required autocomplete="description">{{ old('description') }}</textarea>
-                                @error('description')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
- 
-
-
-                        <div class="form-group row">
-                            <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Video') }}</label>
-
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                                    </div>
-                                    <div class="custom-file">
-                                        <input required type="file" class="form-control @error('file') is-invalid @enderror" name="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                                        <label class="custom-file-label" for="inputGroupFile01">Choose video ( mp4 or mov only )</label>
-                                    </div>
+                                <div class="col-md-9">
+                                    <!--<input id="description" type="description" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" required autocomplete="description"> -->
+                                    <textarea class="form-control @error('description') is-invalid @enderror" rows="8" id="description" name="description" style="resize:none" required autocomplete="description">{{ old('description') }}</textarea>
+                                    @error('description')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
+                        </div>              
+                    </dd>
 
-                                @error('file')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                </dl>
+                </div>
 
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <a href="{{ route('videos.index')}}" class="btn btn-dark ml-2">	&laquo; Back</a>
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Create') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="card-footer text-center">
+                    <button type="button" class="float-left btn btn-primary" onclick="window.history.go(-1); return false;">
+                    &laquo; Previous 
+                    </button>
+                    <button type="submit" class="float-right btn btn-primary">
+                       Next &raquo;
+                    </button>
                 </div>
             </div>
+
+
+    
         </div>
     </div>
+       
+    </form>    
 </div>
 @endsection

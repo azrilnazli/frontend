@@ -33,6 +33,9 @@ Route::post('/videos/store_poster/{id}', [App\Http\Controllers\VideoController::
 Route::get('/videos/trailer/{id}', [App\Http\Controllers\VideoController::class, 'trailer'])->name('videos.trailer');
 Route::post('/videos/store_trailer/{id}', [App\Http\Controllers\VideoController::class, 'store_trailer'])->name('videos.store_trailer');
 
+Route::get('/videos/video/{id}', [App\Http\Controllers\VideoController::class, 'video'])->name('videos.video');
+Route::post('/videos/store_video/{id}', [App\Http\Controllers\VideoController::class, 'store_video'])->name('videos.store_video');
+
 
 Route::resource('categories','App\Http\Controllers\CategoryController');
 Route::post('/categories/search', [App\Http\Controllers\CategoryController::class, 'search'])->name('categories.search');

@@ -35,11 +35,12 @@
                     <thead>
 
                         <th width="1%">ID</th>
-                        <th width="62.5%">TITLE</th>
-                  
-                        <th width="1%"><i class="fas fa-video"></i></th>
+                        <th width="70.5%">TITLE</th>
+             
 
                         <th width="40%">ACTION</th>
+
+                        <th width="1%" vAlign="centre">DELETE</th>
                     </thead>
 
                     <tbody>
@@ -47,27 +48,44 @@
                         <tr >
 
                             <td>{{$row->id }}</td>
-                            <td>{{$row->title }}</td>
-                    
                             <td>
-                                @if( $row->is_ready == 1 ) 
-                                    <i class="fas fa-check"></i>
-                                @else
-                                    <i class="fas fa-spinner fa-pulse"></i>
-                                @endif
+                                <a href="{{ route('videos.show', $row->id)}}" ><p>{{$row->title }}</p></a>
                             </td>
+       
 
                             <td>
                                 
-                                <form action="{{ route('videos.destroy', $row->id)}}" method="post">
-                                    @csrf @method('DELETE')
-                                    <a href="{{ route('videos.show', $row->id)}}" class="btn btn-primary ">Video</a>
-                                    <a href="{{ route('videos.poster', $row->id)}}" class="btn btn-primary">Poster</a>
-                                    <a href="{{ route('videos.trailer', $row->id)}}" class="btn btn-primary">Trailer</a>
-                                    <a href="{{ route('videos.edit', $row->id)}}" class="btn btn-success">Edit</a>
-                                    <button class="btn btn-danger" type="submit">Delete</button>
-                                </form>
 
+                                    
+                                    <a href="{{ route('videos.edit', $row->id)}}" class="btn-sm btn-success "><i class="fas fa-check-circle"></i> Metadata</a>
+                                    
+                                    @if (file_exists(public_path('/uploads/' .$row->id. '/trailer/original.mp4')))
+                                    <a href="{{ route('videos.trailer', $row->id)}}" class="btn-sm btn-success"><i class="fas fa-check-circle"></i> Trailer</a>
+                                    @else
+                                    <a href="{{ route('videos.trailer', $row->id)}}" class="btn-sm btn-secondary"><i class="fas fa-times-circle"></i> Trailer</a>
+                                    @endif
+
+                                    @if (file_exists(public_path('/uploads/' .$row->id. '/videos/original.mp4')))
+                                    <a href="{{ route('videos.video', $row->id)}}" class="btn-sm btn-success"><i class="fas fa-check-circle"></i> Video</a>
+                                    @else
+                                    <a href="{{ route('videos.video', $row->id)}}" class="btn-sm btn-secondary"><i class="fas fa-times-circle"></i> Video</a>
+                                    @endif
+
+                                    @if (file_exists(public_path('/uploads/' .$row->id. '/images/file-1.png')) && file_exists(public_path('/uploads/' .$row->id. '/images/file-2.png'))  )
+                                    <a href="{{ route('videos.poster', $row->id)}}" class="btn-sm btn-success"><i class="fas fa-check-circle"></i> Poster</a>
+                                    @else
+                                    <a href="{{ route('videos.poster', $row->id)}}" class="btn-sm btn-secondary"><i class="fas fa-times-circle"></i> Poster</a>
+                                    @endif
+                                   
+                               
+
+                            </td>
+
+                            <td>
+                            <form action="{{ route('videos.destroy', $row->id)}}" method="post">
+                            @csrf @method('DELETE')
+                            <button onclick="return confirm('Are you sure?')" class="btn btn-danger" type="submit"><i class="fas fa-times"></i></button>
+                            </form>
                             </td>
                         </tr>
                         @endforeach
@@ -84,5 +102,6 @@
     </div>
 
 </div>
+
 
 @endsection

@@ -69,7 +69,7 @@ class VideoController extends Controller
             'title' => $request['title'],
             'description' => $request['description'],
         ]);
-
+/*
         if($request->hasFile('file')){
             $file =  $request['file'];
             $mime = $file->getMimeType();
@@ -89,8 +89,9 @@ class VideoController extends Controller
                 ProcessVideo::dispatch($video->id);
             }
         }
-
-        return redirect('videos')->with('success','Video Created Successfully');
+*/
+        //return redirect('videos')->with('success','Video Created Successfully');
+        return redirect()->route('videos.trailer', ['id' => $video->id])->with('success','Metadata saved.');
     }
 
     /**
@@ -122,7 +123,7 @@ class VideoController extends Controller
         $data['description'] = $request->input('description');
 
         
-
+/*
         // user request to replace current video
         if($request->hasFile('file')){
             $file =  $request['file'];
@@ -144,7 +145,10 @@ class VideoController extends Controller
             }
         }
         Video::where('id',$id)->update( $data);
-        return redirect('videos')->with('success','Update Successfully');
+        */
+        //return redirect('videos')->with('success','Update Successfully');
+        Video::where('id',$id)->update( $data);
+        return redirect()->route('videos.trailer', $id)->with('success','Metadata saved.');
         
     }
 
@@ -198,7 +202,7 @@ class VideoController extends Controller
             $path = public_path().'/uploads/' . $id;
             $file->move($path . '/images/', 'file-2');
             Image::make( $path . '/images/file-2')->resize(1920, 1080)->save( $path . '/images/file-2.png');
-            Image::make( $path . '/images/file-2')->resize(640, 360)->save( $path . '/images/file-2-small.png');
+            Image::make( $path . '/images/file-2')->resize(640, 360)->save( $path . '/images/video-poster.png');
         }
 
         return redirect()->route('videos.poster', ['id' => $id])->with('success','Image upload success');
@@ -241,11 +245,55 @@ class VideoController extends Controller
             $file =  $request['file-2'];
             $path = public_path().'/uploads/' . $id;
             $file->move($path . '/images/', 'file-2');
-            Image::make( $path . '/images/file-2')->resize(640, 360)->save( $path . '/images/trailer.png');
+            Image::make( $path . '/images/file-2')->resize(640, 360)->save( $path . '/images/trailer-poster.png');
         }
 
 
         return redirect()->route('videos.trailer', ['id' => $id])->with('success','Trailer upload success');
+    }
+
+    public function video($id)
+    {
+        $data = Video::find($id);
+        return view('admin.videos.video',compact(['data']));
+    }
+
+
+    public function store_video(Request $request, $id)
+    {
+ 
+        $request->validate([
+            'file-1' => ['mimes:mov,mp4,m4v'],
+            'file-2' => ['mimes:png,jpg,jpeg'],
+        ]);
+        
+
+        // upload trailer
+        if($request->hasFile('file-1')){
+            $file =  $request['file-1'];
+            $mime = $file->getMimeType();
+            if ($mime == "video/x-flv" || $mime == "video/mp4" || $mime == "application/x-mpegURL" || $mime == "video/MP2T" || $mime == "video/3gpp" || $mime == "video/quicktime" || $mime == "video/x-msvideo" || $mime == "video/x-ms-wmv") 
+            {
+           
+                $path = public_path().'/uploads/' . $id;
+                $file->move($path . '/videos/', 'original.mp4');
+
+                # dispatch job here
+                ProcessVideo::dispatch($id);
+            }
+        }
+
+        // upload poster
+        if($request->hasFile('file-2'))
+        {
+            $file =  $request['file-2'];
+            $path = public_path().'/uploads/' . $id;
+            $file->move($path . '/images/', 'file-2');
+            Image::make( $path . '/images/file-2')->resize(640, 360)->save( $path . '/images/video-poster.png');
+        }
+
+
+        return redirect()->route('videos.video', ['id' => $id])->with('success','Video upload success');
     }
 
 

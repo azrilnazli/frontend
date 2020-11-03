@@ -9,9 +9,11 @@
 
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/home">{{ __('Home') }}</a></li>
                     <li class="breadcrumb-item"><a href="/videos">{{ __('Videos') }}</a></li>
                     <li class="breadcrumb-item"><a href="/videos/{{ $data->id }}">{{ $data->title }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('videos.edit' , $data->id )}}">Metadata</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('videos.trailer' , $data->id )}}">Trailer</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('videos.video' , $data->id )}}">Video</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{ __('Poster') }}</li>
                 </ol>
             </nav>
@@ -36,8 +38,8 @@
 
 
             <div class="card">
-                <div class="card-header" style="background-color: #dee2e6"><h2>{{ $data->title }}</h2></div>
-                <div class="card-header" style="background-color: #eaeaea">
+                <div class="card-header" style="background-color: #dee2e6"><button type="button" class="btn btn-primary btn-lg">Poster</button></div>
+                <div class="card-body" style="background-color: #eaeaea">
               
                 <dl class="row col-md-6">
                     <dt class="col-sm-3">Poster 1</dt>
@@ -46,11 +48,9 @@
                     @if (file_exists(public_path('/uploads/' .$data->id. '/images/file-1.png')))
 
 
-                    <table>
-                        <tr>
-                            <td><img style="width:400px;height:600px" src="/uploads/{{ $data->id }}/images/file-1.png" />file-1.png</td>
-                            <td vAlign="top"><img style="width:200px;height:300px" src="/uploads/{{ $data->id }}/images/file-1-small.png" />file-2.png</td>
-                    </table>
+              
+                    <img style="width:400px;height:600px" src="/uploads/{{ $data->id }}/images/file-1.png" />file-1.png
+           
                         
                         
                     @else
@@ -102,9 +102,8 @@
 
                 </dl>
                 </div>
-
-                <div class="form-group  mt-2">
-                    <a href="{{ route('videos.index')}}" class="btn btn-dark ml-2">	&laquo; Back</a>
+                <div class="card-footer text-center">
+                    <a href="{{ route('videos.video' , $data->id )}}" class="float-left btn btn-primary">	&laquo; Video</a>
                 </div>
             </div>
 

@@ -2,21 +2,20 @@
 
 @section('content')
 <div class="container">
-    <form method="POST" action="{{ route('videos.store_trailer', $data->id) }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('videos.store_video', $data->id) }}" enctype="multipart/form-data">
     @csrf
     <div class="row justify-content-center">
         <div class="col-md-12">
 
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/home">{{ __('Home') }}</a></li>
+                <li class="breadcrumb-item"><a href="/home">{{ __('Home') }}</a></li>
                     <li class="breadcrumb-item"><a href="/videos">{{ __('Videos') }}</a></li>
                     <li class="breadcrumb-item"><a href="/videos/{{ $data->id }}">{{ $data->title }}</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('videos.edit' , $data->id )}}">Metadata</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ __('Trailer') }}</li>
-                    <li class="breadcrumb-item"><a href="{{ route('videos.video' , $data->id )}}">Video</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('videos.trailer' , $data->id )}}">Trailer</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ __('Video') }}</li>
                     <li class="breadcrumb-item"><a href="{{ route('videos.poster' , $data->id )}}">Poster</a></li>
-                  
                 </ol>
             </nav>
 
@@ -40,14 +39,14 @@
 
 
             <div class="card">
-                <div class="card-header" style="background-color: #dee2e6"><button type="button" class="btn btn-primary btn-lg">Trailer</button></div>
+                <div class="card-header" style="background-color: #dee2e6"><button type="button" class="btn btn-primary btn-lg">Video</button></div>
                 <div class="card-body" style="background-color: #eaeaea">
               
                 <dl class="row col-md-12">
                  
                     <dd class="col-sm-12">
                     
-                    @if (file_exists(public_path('/uploads/' .$data->id. '/trailer/original.mp4')))
+                    @if (file_exists(public_path('/uploads/' .$data->id. '/videos/original.mp4')))
 
                         <script type="text/javascript" src="//player.wowza.com/player/latest/wowzaplayer.min.js"></script>
                         <div id="playerElement" style="width:100%; height:0; padding:0 0 56.25% 0"></div>
@@ -57,7 +56,7 @@
                                     "license":"PLAY1-hZeDc-CnBKQ-PM8MY-C9QkZ-cu899",
                                     "sources":[
                                                 {
-                                                    "sourceURL":"http://localhost:8081/vod/{{ $data->id }}/trailer/smil:stream.smil/playlist.m3u8"
+                                                    "sourceURL":"http://localhost:8081/vod/{{ $data->id }}/videos/smil:stream.smil/playlist.m3u8"
                                                 },
                                             ],
 
@@ -67,13 +66,13 @@
                                     "mute":false,
                                     "volume":75,
 
-                                    @if (file_exists(public_path('/uploads/' .$data->id. '/images/trailer-poster.png')))
-                                        "posterFrameURL":"/uploads/{{ $data->id }}/images/trailer-poster.png",
-                                        "endPosterFrameURL":"/uploads/{{ $data->id }}/images/trailer-poster.png",
+                                    @if (file_exists(public_path('/uploads/' .$data->id. '/images/video-poster.png')))
+                                        "posterFrameURL":"/uploads/{{ $data->id }}/images/video-poster.png",
+                                        "endPosterFrameURL":"/uploads/{{ $data->id }}/images/video-poster.png",
                                         "uiPosterFrameFillMode":"fit"
                                     @else 
-                                        "posterFrameURL":"/src/poster/trailer-poster.png",
-                                        "endPosterFrameURL":"/src/poster/trailer-posdter.png",
+                                        "posterFrameURL":"/src/poster/video-poster.png",
+                                        "endPosterFrameURL":"/src/poster/video-poster.png",
                                         "uiPosterFrameFillMode":"fit"
 
                                     @endif    
@@ -83,7 +82,7 @@
                         
                         
                     @else
-                        <img src="/src/poster/trailer.png" />
+                        <img src="/src/poster/video.png" />
                     @endif
                     
                     
@@ -121,8 +120,8 @@
                 </div>
 
                 <div class="card-footer text-center">
-                    <a href="{{ route('videos.edit' , $data->id )}}" class="float-left btn btn-primary">	&laquo; Metadata</a>
-                    <a href="{{ route('videos.video' , $data->id )}}" class="float-right btn btn-primary"> Video &raquo;</a>
+                    <a href="{{ route('videos.trailer' , $data->id )}}" class="float-left btn btn-primary">	&laquo; Trailer</a>
+                    <a href="{{ route('videos.poster' , $data->id )}}" class="float-right btn btn-primary"> Poster 	&raquo;</a>
                 </div>
             </div>
 
