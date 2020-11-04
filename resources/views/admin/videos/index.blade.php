@@ -1,6 +1,9 @@
 @extends('layouts.app')
 @section('content')
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.3/umd/popper.min.js" integrity="sha512-53CQcu9ciJDlqhK7UD8dZZ+TF2PFGZrOngEYM/8qucuQba+a+BXOIRsp9PoMNJI3ZeLMVNIxIfZLbG/CdHI5PA==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tooltip.js/1.3.1/tooltip.min.js" integrity="sha512-ZAFwin0nQNXMJRo329TcU4ZyC+ZgKbnaopq/LH/6j7n9zT7ZVLK5BiSmnqgx7jNiewVLgc04geoE62cNN1D8VQ==" crossorigin="anonymous"></script>
+
 
 <div class="container">
     <div class="row justify-content-center">
@@ -23,7 +26,7 @@
             <nav class="navbar navbar-expand-sm " style="background-color: #dee2e6">
                 <form class="form-inline" action="{{ route('videos.search') }}" method="POST">
                 @csrf
-                    <input name="query" class="form-control mr-sm-2" type="text" placeholder="Search by Title">
+                    <input name="query" class="form-control mr-sm-2" type="text" placeholder="Search">
                     <button class="btn btn-success" type="submit">Search</button>
                 </form>
                 <a href="{{ route('videos.create')}}" class="btn btn-primary ml-2">Create</a>
@@ -37,6 +40,7 @@
                         <th width="1%">ID</th>
                         <th width="1%">CATEGORY</th>
                         <th width="58.5%">TITLE</th>
+                        <th width="1%"><i class="fas fa-eye" title="Publish to public ?"></i></th>
                         <th width="40%">MODULE</th>
 
                         <th width="1%" vAlign="centre">DELETE</th>
@@ -61,6 +65,14 @@
                                 <a href="{{ route('videos.show', $row->id)}}" ><p class="h5">{{$row->title }}</p></a>
                             </td>
        
+                            <td class="text-center">
+                                @if( $row->is_published == 1)
+                                <i class="fas fa-check"></i>
+                                @else 
+                                <span style="color: red;"><i class="fas fa-times "></i></span>
+                                @endif
+                            
+                            </title>
 
                             <td class="text-center">
                                 

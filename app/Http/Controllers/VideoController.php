@@ -145,7 +145,8 @@ class VideoController extends Controller
         //$results = Post::where('title', 'like', "{$keyword}%")->get()
         
         $data = Video::where([['title', 'like', "{$query}%"]])
-        ->paginate(10)->setPath('videos');
+                ->orWhere([['description', 'like', "{$query}%"]])
+                ->paginate(10)->setPath('videos');
         
         return view('admin.videos.index',compact(['data']));
     }
