@@ -27,18 +27,50 @@
     <div id="app ">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container-fluid ">
+                @guest
                 <a class="navbar-brand " href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
+                @else
+                <a class="navbar-brand " href="{{ url('/home') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
+                @endguest
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
+                    @guest
 
-                    </ul>
+                    @else
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                        <a class="nav-item nav-link {{ Route::currentRouteNamed( 'home' ) ?  'active' : '' }}" href="/home">Home</a>
+                        @if($categories)
+                           
+                            @foreach($categories as $k => $v)
+
+                                @if( Route::currentRouteNamed( 'play' ))
+                                    @if($video->category_id == $k) 
+                                        <a class="nav-item nav-link active " href="{{ $k }}">{{ $v }}</a>
+                                    @else
+                                        <a class="nav-item nav-link" href="{{ $k }}">{{ $v }}</a>    
+                                    @endif
+
+                                @else
+                                    <a class="nav-item nav-link" href="{{ $k }}">{{ $v }}</a>
+                                @endif
+                                
+                            @endforeach
+
+                        @endif
+                       
+            
+                        </div>
+                    </div>
+                    @endguest
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -59,13 +91,13 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('users.index') }}">
+                                    <a class="dropdown-item" href="">
                                         {{ __('Profile') }}
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('categories.index') }}">
+                                    <a class="dropdown-item" href="">
                                         {{ __('Account') }}
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('videos.index') }}">
+                                    <a class="dropdown-item" href="">
                                         {{ __('My Playlist') }}
                                     </a>
                                     <div class="dropdown-divider"></div>

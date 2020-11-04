@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Video;
 use App\Models\Category;
+use View;
 
 class HomeController extends Controller
 {
@@ -17,6 +18,10 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        // menu
+        $categories = $this->getCategories();
+        View::share('categories', $categories);
     }
 
     /**
@@ -30,7 +35,22 @@ class HomeController extends Controller
         // list all latest videos limit by 24
         $row[1] =  Video::skip(0)->take(6)->get();
         $row[2] =  Video::skip(6)->take(6)->get();
-
         return view('home')->with(compact('row'));
     }
+
+    /**
+     * Video playback based on passed {id}.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function play($id)
+    {
+        $video =  Video::find($id);
+        return view('play',compact('video'));
+    }    
+
+    private function getCategories()
+    {
+        return Category::orderBy('title','ASC')->pluck('title', 'id');
+    }   
 }
