@@ -16,14 +16,19 @@
                 </ol>
             </nav>
             <div class="card">
-                <div class="card-header" style="background-color: #dee2e6"><h2>{{ $data->title }}</h2></div>
+                <div class="card-header" style="background-color: #dee2e6"><button type="button" class="btn btn-primary btn-lg">Video Assets</button></div>
                 <div class="card-header" style="background-color: #eaeaea">
               
                 <dl class="row col-md-12">
+                    <dt class="col-sm-2">Title</dt>
+                    <dd class="col-sm-9"> {{ $data->title }}</dd>
+                    <dt class="col-sm-2">Category</dt>
+                    <dd class="col-sm-9"> {{ $data->category->title }}</dd>
                     <dt class="col-sm-2">Description</dt>
                     <dd class="col-sm-9"> {{ $data->description }}</dd>
                     <dt class="col-sm-2">Time Taken</dt>
                     <dd class="col-sm-9">  {{ $data->time_taken }} seconds</dd>
+                    
 
                     <dt class="col-sm-2">Created On</dt>
                     <dd class="col-sm-9">  {{ $data->created_at }}</dd>

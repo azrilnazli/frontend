@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Video;
+use App\Models\Category;
 use App\Jobs\ProcessVideo;
 use App\Jobs\ProcessTrailer;
 use Illuminate\Http\Request;
@@ -27,8 +28,12 @@ class VideoController extends Controller
     public function index()
     {
         // Video Listing
-        $data = Video::orderBy('id','desc')->paginate(10)->setPath('videos');
-        return view('admin.videos.index',compact(['data']));
+
+
+        
+        $data = Video::with('category')->paginate(10)->setPath('videos');
+        //$data = Video::all()->paginate('10');
+        return view('admin.videos.index',compact('data'));
     }
 
     /**
@@ -39,7 +44,9 @@ class VideoController extends Controller
     public function create()
     {
         // display create form
-        return view('admin.videos.create');
+        $categories = $this->getCategories();
+        //dd($categories);
+        return view('admin.videos.create')->with(compact('categories'));
     }
 
     /**
@@ -53,6 +60,7 @@ class VideoController extends Controller
         $rules = [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:1000'],
+            'category_id' => ['required', 'integer'],
             //'file' => ['required', 'mimes:mp4,mov,MP4,MOV'], 
         ];
     
@@ -67,29 +75,10 @@ class VideoController extends Controller
         $video = Video::create([
             'user_id' => Auth::user()->id, 
             'title' => $request['title'],
+            'category_id' => $request['category_id'],
             'description' => $request['description'],
         ]);
-/*
-        if($request->hasFile('file')){
-            $file =  $request['file'];
-            $mime = $file->getMimeType();
-            if ($mime == "video/x-flv" || $mime == "video/mp4" || $mime == "application/x-mpegURL" || $mime == "video/MP2T" || $mime == "video/3gpp" || $mime == "video/quicktime" || $mime == "video/x-msvideo" || $mime == "video/x-ms-wmv") 
-            {
-           
-                $filename = $file->getClientOriginalName();
-                $path = public_path().'/uploads/' . $video->id;
-                    File::makeDirectory($path, $mode = 0777, true, true); 
-                    File::makeDirectory($path . '/videos', $mode = 0777, true, true);
-                    File::makeDirectory($path . '/images', $mode = 0777, true, true);
-                    File::makeDirectory($path . '/trailer', $mode = 0777, true, true);
-                $file->move($path . '/videos', 'original.mp4');
 
-                # dispatch job here
-                //dispatch(new ProcessVideo($video->id));
-                ProcessVideo::dispatch($video->id);
-            }
-        }
-*/
         //return redirect('videos')->with('success','Video Created Successfully');
         return redirect()->route('videos.trailer', ['id' => $video->id])->with('success','Metadata saved.');
     }
@@ -109,7 +98,8 @@ class VideoController extends Controller
     public function edit($id)
     {
        $data = Video::find($id);
-       return view('admin.videos.edit',compact(['data']));
+       $categories = $this->getCategories();
+       return view('admin.videos.edit',compact(['data','categories']));
     }
 
     public function update(Request $request, $id)
@@ -117,38 +107,27 @@ class VideoController extends Controller
         $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:1000'],
+            'category_id' => ['required', 'integer'],
+            'is_published' => ['integer' ],
         ]);
       
         $data['title'] = $request->input('title');
         $data['description'] = $request->input('description');
-
+        $data['category_id'] = $request->input('category_id');
         
-/*
-        // user request to replace current video
-        if($request->hasFile('file')){
-            $file =  $request['file'];
-            $mime = $file->getMimeType();
-            if ($mime == "video/x-flv" || $mime == "video/mp4" || $mime == "application/x-mpegURL" || $mime == "video/MP2T" || $mime == "video/3gpp" || $mime == "video/quicktime" || $mime == "video/x-msvideo" || $mime == "video/x-ms-wmv") 
-            {
-           
-                $path = public_path().'/uploads/' . $id;
-                File::deleteDirectory(public_path('uploads/'. $id . '/videos'));
-                File::makeDirectory($path . '/videos', $mode = 0777, true, true);
-                $filename = $file->getClientOriginalName();
-                $path = public_path().'/uploads/' . $id;
-                $file->move($path . '/videos/', 'original.mp4');
 
-                # dispatch job here
-                //dispatch(new ProcessVideo($video->id));
-                $data['is_ready'] = 0;
-                ProcessVideo::dispatch($id);
-            }
+        $data['is_published'] = 0;
+        if ( $request->input('is_published') == 1 )
+        {
+            $data['is_published'] = 1;
+        } else {
+            $data['is_published'] = 0;
         }
+
+        //dd($data);
+
         Video::where('id',$id)->update( $data);
-        */
-        //return redirect('videos')->with('success','Update Successfully');
-        Video::where('id',$id)->update( $data);
-        return redirect()->route('videos.trailer', $id)->with('success','Metadata saved.');
+        return redirect()->route('videos.edit', $id)->with('success','Metadata saved.');
         
     }
 
@@ -291,10 +270,11 @@ class VideoController extends Controller
             $file->move($path . '/images/', 'file-2');
             Image::make( $path . '/images/file-2')->resize(640, 360)->save( $path . '/images/video-poster.png');
         }
-
-
         return redirect()->route('videos.video', ['id' => $id])->with('success','Video upload success');
     }
 
-
+    private function getCategories()
+    {
+        return Category::orderBy('title','ASC')->pluck('title', 'id');
+    }    
 }

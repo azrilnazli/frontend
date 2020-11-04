@@ -40,6 +40,8 @@
                 <div class="card-header" style="background-color: #dee2e6"><button type="button" class="btn btn-primary btn-lg">Metadata</button></div>
                 <div class="card-body" style="background-color: #eaeaea">
 
+
+
                     <dt class="col-sm-3">Title</dt>
                     <dd class="col-sm-9">
                         <div class="form-group row">
@@ -54,6 +56,25 @@
                             </div>
                         </div>
                     </dd>
+
+                    <dt class="col-sm-3">Category</dt>
+                    <dd class="col-sm-9">
+                        <div class="form-group row">
+                            <div class="col-md-9">                    
+
+                                <select class="form-control @error('category_id') is-invalid @enderror" id="category_id" name="category_id" >
+                                    @foreach($categories as $key => $category)
+                                        <option  @if( old('category_id') == $key) {{ 'selected' }}  @endif value="{{ $key }}">{{ $category }}</option>
+                                    @endForeach
+                                </select>
+                                @error('category_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                @enderror
+                                </div>
+                        </div>
+                    </dd>                              
 
                     <dt class="col-sm-3">Description</dt>
                     <dd class="col-sm-9">

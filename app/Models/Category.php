@@ -15,10 +15,10 @@ class Category extends Model
     ];
 
     /**
-     * Get the user that owns the video.
+     * User HasMany Videos
      */
-    public function video()
+    public function videos()
     {
-        return $this->belongsTo('App\Models\User');
-    }
+        return $this->hasMany('App\Models\Video');
+    } 
 }

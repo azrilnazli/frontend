@@ -19,6 +19,12 @@
                 <div class="card-body">
 
 
+                @if ($message = Session::get('success'))
+                    <div class="alert alert-success" role="alert">
+                        {{ $message }}
+                    </div>
+                @endif
+
                 @if ($errors->any())
                 
                 <div class="alert alert-danger">
@@ -69,7 +75,7 @@
                             <div class="col-md-6 offset-md-4">
                                 <a href="{{ route('categories.index')}}" class="btn btn-dark ml-2">	&laquo; Back</a>
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Create') }}
+                                    {{ __('Update') }}
                                 </button>
                             </div>
                         </div>

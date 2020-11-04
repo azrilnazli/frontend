@@ -9,7 +9,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/home">{{ __('Home') }}</a></li>
-                    <li class="breadcrumb-item"><a href="/categories">{{ __('categories') }}</a></li>
+                    <li class="breadcrumb-item"><a href="/categories">{{ __('Categories') }}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{ __('Index') }}</li>
                 </ol>
             </nav>
@@ -34,12 +34,11 @@
                 <table class="table table-bordered table-condensed table-striped">
                     <thead>
 
-                        <th width="*">ID</th>
+                        <th width="1%">ID</th>
                         <th width="20%">TITLE</th>
                         <th width="50%">DESCRIPTION</th>
-                        <th width="*"><i class="fas fa-video"></i></th>
-
-                        <th width="20%">ACTION</th>
+                        <th width="13%">MANAGE</th>
+                        <th width="1%">DELETE</th>
                     </thead>
 
                     <tbody>
@@ -49,24 +48,16 @@
                             <td>{{$row->id }}</td>
                             <td>{{$row->title }}</td>
                             <td>{{$row->description }}</td>
-                            <td>
-                                @if( $row->is_ready == 1 ) 
-                                    <i class="fas fa-check"></i>
-                                @else
-                                    <i class="fas fa-spinner fa-pulse"></i>
-                                @endif
+                            <td>       
+                                    <a href="{{ route('categories.show', $row->id)}}" class="btn btn-primary">Show</a>
+                                    <a href="{{ route('categories.edit', $row->id)}}" class="btn btn-secondary">Edit</a>
                             </td>
 
                             <td>
-                                
-
-                                <form action="{{ route('categories.destroy', $row->id)}}" method="post">
-                                    @csrf @method('DELETE')
-                                    <a href="{{ route('categories.show', $row->id)}}" class="btn btn-primary">Show</a>
-                                    <a href="{{ route('categories.edit', $row->id)}}" class="btn btn-secondary">Edit</a>
-                                    <button class="btn btn-danger" type="submit">Delete</button>
-                                </form>
-
+                            <form action="{{ route('videos.destroy', $row->id)}}" method="post">
+                            @csrf @method('DELETE')
+                            <button onclick="return confirm('Are you sure?')" class="btn btn-danger" type="submit"><i class="fas fa-times"></i></button>
+                            </form>
                             </td>
                         </tr>
                         @endforeach

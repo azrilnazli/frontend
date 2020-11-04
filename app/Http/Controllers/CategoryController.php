@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Auth;
 
 class CategoryController extends Controller
 {
@@ -15,28 +16,21 @@ class CategoryController extends Controller
 
     public function index()
     {
-
         $data = Category::orderBy('id','desc')->paginate(10)->setPath('categories');
         return view('admin.categories.index',compact(['data']));
     }
 
     public function search(Request $request)
     {
-        $query = $request->input('query');
-        // Starts with 'foo', ends with anything
-        //$results = Post::where('title', 'like', "{$keyword}%")->get()
-        
-        $data = Category::where([['name', 'like', "{$query}%"]])
+        $query = $request->input('query');        
+        $data = Category::where([['title', 'like', "{$query}%"]])
         ->paginate(10)->setPath('categories');
         
         return view('admin.categories.index',compact(['data']));
     }
 
-
-
     public function create()
     {
-
         return view('admin.categories.create')->with('roles');
     }
 
@@ -44,21 +38,19 @@ class CategoryController extends Controller
     {
         //dd($request['role']);
         $request->validate([
-            'role' => ['in:admin,manager,Category'], 
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:categories'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'title' => ['required', 'string', 'max:255', 'unique:categories'],
+            'description' => ['required', 'string', 'max:2000'],
            ]);
 
         //Category::create($request->all());
 
         Category::create([
-            'role' => $request['role'],
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
+            'user_id' => Auth::user()->id,
+            'title' => $request['title'],
+            'description' => $request['description'],
+  
         ]);
-        return redirect('categories')->with('success','Create Successfully');
+        return redirect('categories')->with('success','Category created successfully');
     }
 
     public function show($id)
@@ -70,35 +62,25 @@ class CategoryController extends Controller
     public function edit($id)
     {
        $data = Category::find($id);
-       $roles = $this->getRoles();
-       return view('admin.categories.edit',compact(['data','roles']));
+       return view('admin.categories.edit',compact(['data']));
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-         'role' => ['in:admin,manager,Category'], 
-         'name'     => 'required',
-         'email'    => 'required|email',
-        ]);
+        $input = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:2000'],
+           ]);
 
-        if( !empty( $request->input('password') ))
-        {
-            $data['password'] = Hash::make($request->input('password'));
-        }
-        
-        $data['role'] = $request->input('role');
-        $data['name'] = $request->input('name');
-        $data['email'] = $request->input('email');
 
-        Category::where('id',$id)->update( $data);
-        return redirect('categories')->with('success','Update Successfully');
+        Category::where('id',$id)->update($input);
+        return redirect()->route('categories.edit', $id)->with('success','Category updated.');
         
     }
 
     public function destroy($id)
     {
         Category::where('id',$id)->delete();
-        return redirect()->back()->with('success','Delete Successfully');
+        return redirect()->back()->with('success','Category deleted.');
     }
 }

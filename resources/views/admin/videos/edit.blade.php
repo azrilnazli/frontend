@@ -41,7 +41,7 @@
 
 
             <div class="card">
-                <div class="card-header" style="background-color: #dee2e6"><h2>Metadata</h2></div>
+                <div class="card-header" style="background-color: #dee2e6"><button type="button" class="btn btn-primary btn-lg">Metadata</button></div>
                 <div class="card-body" style="background-color: #eaeaea">
 
                     <dt class="col-sm-3">Title</dt>
@@ -59,6 +59,26 @@
                         </div>
                     </dd>
 
+
+                    <dt class="col-sm-3">Category</dt>
+                    <dd class="col-sm-9">
+                        <div class="form-group row">
+                            <div class="col-md-9">                    
+
+                                <select class="form-control @error('category_id') is-invalid @enderror" id="category_id" name="category_id" >
+                                    @foreach($categories as $key => $category)
+                                        <option  @if( $data->category_id == $key) {{ 'selected' }}  @endif value="{{ $key }}">{{ $category }}</option>
+                                    @endForeach
+                                </select>
+                                @error('category_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                @enderror
+                                </div>
+                        </div>
+                    </dd>   
+
                     <dt class="col-sm-3">Description</dt>
                     <dd class="col-sm-9">
                         <div class="form-group row">
@@ -75,19 +95,37 @@
                         </div>              
                     </dd>
 
+                    <dt class="col-sm-3">Publish now ?</dt>
+                    <dd class="col-sm-9">
+                        <div class="form-group row">
+                            <div class="col-md-1">
+    
+                                    <input @if($data->is_published == 1) checked @endif id="is_published" type="checkbox" class="@error('is_published') is-invalid @enderror" name="is_published" value="1" >
+
+                                    @error('title')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                            </div>
+                        </div>
+                    </dd>                    
+
                 </dl>
+                <dt class="col-sm-3"></dt> 
+                <dd class="col-sm-9">
+                    <button type="submit" class="btn btn-primary" >
+                        Update
+                    </button>
+                </dd>    
+
                 </div>
 
                 <div class="card-footer text-center">
                     <a href="{{ route('videos.show', $data->id  )}}" class="float-left btn btn-primary">	&laquo; Show Assets</a>
-                    <button type="submit" class="float-right btn btn-primary">
-                        Trailer &raquo;
-                    </button>
+                    <a href="{{ route('videos.trailer', $data->id  )}}" class="float-right btn btn-primary">	Trailer &raquo;</a>
                 </div>
-            </div>
-
-
-    
+            </div>    
         </div>
     </div>
        

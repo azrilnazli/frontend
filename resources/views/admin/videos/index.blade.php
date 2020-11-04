@@ -35,25 +35,34 @@
                     <thead>
 
                         <th width="1%">ID</th>
-                        <th width="70.5%">TITLE</th>
-             
-
+                        <th width="1%">CATEGORY</th>
+                        <th width="58.5%">TITLE</th>
                         <th width="40%">MODULE</th>
 
                         <th width="1%" vAlign="centre">DELETE</th>
                     </thead>
 
                     <tbody>
-                        @foreach($data as $row)
+                        @foreach($data as $key => $row)
+                      
                         <tr >
-
                             <td> <span class="badge-pill badge-dark">{{$row->id }}</span></td>
+                            <td> 
+
+                            @if($row->category)
+                                <span class="badge badge-primary">
+                                    {{$row->category->title }}
+                                </span>
+                            @endif
+
+                             </td>
+                           
                             <td>
                                 <a href="{{ route('videos.show', $row->id)}}" ><p class="h5">{{$row->title }}</p></a>
                             </td>
        
 
-                            <td>
+                            <td class="text-center">
                                 
 
                                     
@@ -81,11 +90,11 @@
 
                             </td>
 
-                            <td>
-                            <form action="{{ route('videos.destroy', $row->id)}}" method="post">
-                            @csrf @method('DELETE')
-                            <button onclick="return confirm('Are you sure?')" class="btn btn-danger" type="submit"><i class="fas fa-times"></i></button>
-                            </form>
+                            <td class="text-center">
+                                <form action="{{ route('videos.destroy', $row->id)}}" method="post">
+                                @csrf @method('DELETE')
+                                <button onclick="return confirm('Are you sure?')" class="btn btn-danger" type="submit"><i class="fas fa-times"></i></button>
+                                </form>
                             </td>
                         </tr>
                         @endforeach
