@@ -1,36 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-   
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-  
-                    @can('isAdmin')
-                        <div class="btn btn-success btn-lg">
-                          You have Admin Access
-                        </div>
-                    @elsecan('isManager')
-                        <div class="btn btn-primary btn-lg">
-                          You have Manager Access
-                        </div>
-                    @else
-                        <div class="btn btn-info btn-lg">
-                          You have User Access
-                        </div>
-                    @endcan
-  
-                </div>
-            </div>
-        </div>
+
+
+
+<div class="carousel">
+    <div class="carousel-row text-center">
+        @foreach($row[1] as $video)
+        <div class="carousel-tile" style="background: #46B1C9;"><img  style="width:250px;height:142px" src="http://auth.test/uploads/{{ $video->id }}/images/file-2-small.png" /></div>
+        @endforeach
     </div>
 </div>
+
+
+
+
 @endsection 
