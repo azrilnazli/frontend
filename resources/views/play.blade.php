@@ -12,7 +12,7 @@
                 "license":"PLAY1-hZeDc-CnBKQ-PM8MY-C9QkZ-cu899",
                 "sources":[
                             {
-                                "sourceURL":"http://localhost:8081/vod/{{ $video->id }}/videos/smil:stream.smil/playlist.m3u8"
+                                "sourceURL":"{{ config('settings.streaming_server') . $video->id }}/videos/smil:stream.smil/playlist.m3u8"
                             },
                         ],
 
@@ -21,8 +21,8 @@
                 "autoPlay":false,
                 "mute":false,
                 "volume":75,
-                "posterFrameURL":"http://auth.test/uploads/{{ $video->id }}/images/file-2.png",
-                "endPosterFrameURL":"http://auth.test/uploads/{{ $video->id }}/images/file-2.png",
+                "posterFrameURL":"{{ config('settings.asset_server') . $video->id }}/images/file-2.png",
+                "endPosterFrameURL":"{{ config('settings.asset_server') . $video->id }}/images/file-2.png",
                 "uiPosterFrameFillMode":"fit"   
             }
         );

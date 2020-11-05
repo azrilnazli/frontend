@@ -20,6 +20,7 @@ class HomeController extends Controller
         $this->middleware('auth');
 
         // menu
+  
         $categories = $this->getCategories();
         View::share('categories', $categories);
     }
@@ -31,11 +32,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-
         // list all latest videos limit by 24
-        $row[1] =  Video::skip(0)->take(6)->get();
-        $row[2] =  Video::skip(6)->take(6)->get();
-        return view('home')->with(compact('row'));
+        $video_per_row = 9;
+          $row[1] =  Video::orderBy('id','DESC')->skip(0)->take( $video_per_row)->get();
+          $row[2] =  Video::orderBy('id','DESC')->skip( $video_per_row)->take( $video_per_row)->get();
+          
+          return view('home')->with(compact('row'));
+    }
+
+    public function by_category($id)
+    {
+        // list all latest videos limit by 24
+        $data =  Video::where('category_id', $id)->orderBy('id','DESC')->get();
+
+        View::share('category_id', $id);
+        return view('by_category')->with(compact('data'));
     }
 
     /**

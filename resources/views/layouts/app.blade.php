@@ -21,7 +21,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/carousel.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/2-3.css') }}" rel="stylesheet">
+  
 </head>
 <body class="bg-dark text-white">
     <div id="app ">
@@ -50,20 +51,17 @@
                         <a class="nav-item nav-link {{ Route::currentRouteNamed( 'home' ) ?  'active' : '' }}" href="/home">Home</a>
                         @if($categories)
                            
-                            @foreach($categories as $k => $v)
+                            @if( Route::currentRouteNamed('home'))
+                                @include('parts/top_menu', [ 'current' => null ] )       
+                            @endif
 
-                                @if( Route::currentRouteNamed( 'play' ))
-                                    @if($video->category_id == $k) 
-                                        <a class="nav-item nav-link active " href="{{ $k }}">{{ $v }}</a>
-                                    @else
-                                        <a class="nav-item nav-link" href="{{ $k }}">{{ $v }}</a>    
-                                    @endif
+                            @if( Route::currentRouteNamed('play'))
+                                @include('parts/top_menu', [ 'current' => $video->category_id ] )       
+                            @endif
 
-                                @else
-                                    <a class="nav-item nav-link" href="{{ $k }}">{{ $v }}</a>
-                                @endif
-                                
-                            @endforeach
+                            @if( Route::currentRouteNamed('by_category'))
+                                @include('parts/top_menu', [ 'current' => $category_id ] )       
+                            @endif
 
                         @endif
                        
