@@ -34,8 +34,8 @@ class HomeController extends Controller
     {
         // list all latest videos limit by 24
         $video_per_row = 9;
-          $row[1] =  Video::orderBy('id','DESC')->skip(0)->take( $video_per_row)->get();
-          $row[2] =  Video::orderBy('id','DESC')->skip( $video_per_row)->take( $video_per_row)->get();
+          $row[1] =  Video::where('is_published', 1)->orderBy('id','DESC')->skip(0)->take( $video_per_row)->get();
+          $row[2] =  Video::where('is_published', 1)->orderBy('id','DESC')->skip( $video_per_row)->take( $video_per_row)->get();
           
           return view('home')->with(compact('row'));
     }
