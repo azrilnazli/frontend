@@ -87,8 +87,9 @@
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 @if(file_exists( public_path().'/thumbnails/avatar-'. auth()->user()->id . '.png' )) 
                                 <img style="width:40px" class="img-thumbnail  border-0 rounded rounded-circle" src="/thumbnails/avatar-1.png" /> 
+                                @else
+                                <strong>{{ Auth::user()->name }}</strong>
                                 @endif
-                               ss {{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
