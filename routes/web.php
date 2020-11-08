@@ -17,8 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/change_password', [App\Http\Controllers\ProfileController::class, 'change_password'])->name('change_password');
-Route::post('/update_password', [App\Http\Controllers\ProfileController::class, 'update_password'])->name('update_password');
+
 
 Auth::routes();
 
@@ -28,5 +27,5 @@ Route::get('/by_category/{id}', [App\Http\Controllers\HomeController::class, 'by
 
 
 Route::resource('profile','App\Http\Controllers\ProfileController');
-#Route::get('/profile/change_password', [App\Http\Controllers\ProfileController::class, 'change_password'])->name('profile.change_password');
-#Route::post('/profile/update_password', [App\Http\Controllers\ProfileController::class, 'update_password'])->name('profile.update_password');
+Route::get('/change_password', [App\Http\Controllers\ProfileController::class, 'change_password'])->name('change_password');
+Route::post('/update_password', [App\Http\Controllers\ProfileController::class, 'update_password'])->name('update_password');
