@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Rules\CurrentPasswordMatch;
+use App\Rules\MatchOldPassword;
 
 class StoreChangePassword extends FormRequest
 {
@@ -25,7 +25,7 @@ class StoreChangePassword extends FormRequest
     public function rules()
     {
         return [
-            'current_password'  => ['required', new CurrentPasswordMatch ],
+            'current_password'  => ['required', new MatchOldPassword ],
             'password'          => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }

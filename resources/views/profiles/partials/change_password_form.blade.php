@@ -1,4 +1,4 @@
-<form action="{{ route('profile.update_password') }}" method="post">
+<form action="{{ route('update_password') }}" method="post">
 @csrf
 
 <div class="form-group row">
@@ -44,7 +44,7 @@
     
     <div class="col-md">
     <button type="submit" class="btn btn-primary">
-                {{ __('Submit') }}
+                {{ __('Update') }}
     </button>   
     </div>
 </div>

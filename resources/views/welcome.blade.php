@@ -8,6 +8,10 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+        <link rel="dns-prefetch" href="//fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+         <!-- Place your kit's code here -->
+        <script src="https://kit.fontawesome.com/b55bf4458b.js" crossorigin="anonymous"></script>
 
         <!-- Styles -->
         <style>
@@ -22,21 +26,22 @@
     </head>
     <body class="antialiased">
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
+
+            <div class="wrapper container-fluid ">
+            <h1>NURFLIXTV</h1>
             @if (Route::has('login'))
-                <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+                <div class="px-6  sm:block">
                     @auth
-                        <a href="{{ url('/home') }}" class="text-sm text-gray-700 underline">Home</a>
+                        <script>window.location = "/home";</script>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Login</a>
+                        <a href="{{ route('login') }}" class="text-sm text-gray-700 underline"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a>
+                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline"><i class="fa fa-edit" aria-hidden="true"></i> Register</a>
                         @endif
                     @endif
                 </div>
             @endif
-            <div class="wrapper container-fluid ">
-            <h1>NURFLIXTV</h1>
             </div>
         </div>
     </body>

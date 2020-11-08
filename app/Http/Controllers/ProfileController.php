@@ -1,12 +1,11 @@
 <?php
-
 namespace App\Http\Controllers;
+use Illuminate\Http\Request;
 
 use App\Models\Profile;
 use App\Models\User;
 use App\Models\Category;
 
-use App\Http\Requests\Request;
 use App\Http\Requests\ProfileStoreRequest;
 use App\Http\Requests\StoreChangePassword;
 
@@ -31,6 +30,11 @@ class ProfileController extends Controller
   
         $categories = $this->getCategories();
         View::share('categories', $categories);
+    }
+
+    public function show()
+    {
+        return view('profiles.change_password');
     }
 
     /**
@@ -150,13 +154,7 @@ class ProfileController extends Controller
     }
 
 
-    
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Profile  $profile
-     * @return \Illuminate\Http\Response
-     */
+
     public function change_password()
     {
         return view('profiles.change_password');
