@@ -62,4 +62,12 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Video');
     }    
+
+    /**
+     * User HasOne Profile
+     */
+    public function profile()
+    {
+        return $this->hasOne('App\Models\Profile');
+    }      
 }
