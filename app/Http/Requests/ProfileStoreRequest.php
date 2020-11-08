@@ -24,8 +24,8 @@ class ProfileStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'address'      => ['required', 'string', 'max:200'],
-            'avatar'       => ['required', 'image'],
+            'address'      => [ 'string', 'max:200'],
+            'avatar'       => [ 'image'],
         ];
     }
 }
