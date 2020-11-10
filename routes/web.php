@@ -36,3 +36,12 @@ Route::get('/status', [App\Http\Controllers\PaymentController::class, 'status'])
 Route::post('/cancel', [App\Http\Controllers\PaymentController::class, 'cancel'])->name('payment.cancel');
 Route::post('/resume', [App\Http\Controllers\PaymentController::class, 'resume'])->name('payment.resume');
 
+use Illuminate\Http\Request;
+
+Route::get('/payment/invoice/{invoice}', function (Request $request, $invoiceId) {
+    return $request->user()->downloadInvoice($invoiceId, [
+        'vendor' => 'yourFLIX VOD',
+        'product' => 'VOD Subscription',
+    ]);
+});
+

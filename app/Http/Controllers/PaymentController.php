@@ -25,15 +25,23 @@ class PaymentController extends Controller
 
     public function status()
     {
-        if ( auth()->user()->subscribed('main')) 
+        $user = auth()->user();
+        if ($user->subscribed('main')) 
         {
             // view subscriber view
+            //$invoices = $user->invoices();
+
+            $data = [
+                'invoices' =>  $user->invoices()
+            ];
+
+            return view('payments.status')->with($data);
             
         } else {
             // view non-subscriber view
         }
 
-        return view('payments.status');
+        
     }
 
     public function billing()

@@ -102,6 +102,25 @@
             </tr>
 
         </table>
+        <hr />
+        <h2>Invoices</h2>
+        <table class="table table-light">
+        <thead >
+            <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Price</th>
+            <th scope="col">Action</th>
+  
+            </tr>
+     </thead>
+            @foreach ($invoices as $invoice)
+                <tr>
+                    <td scope="row">{{ $invoice->date()->toFormattedDateString() }}</td>
+                    <td>{{ $invoice->total() }}</td>
+                    <td><a class="btn btn-success" href="/payment/invoice/{{ $invoice->id }}">Download</a></td>
+                </tr>
+            @endforeach
+        </table>
 
 
 
