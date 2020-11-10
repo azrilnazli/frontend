@@ -14,7 +14,6 @@ class PaymentController extends Controller
         $this->middleware('auth');
 
         // menu
-  
         $categories = $this->getCategories();
         View::share('categories', $categories);
     }
@@ -24,6 +23,19 @@ class PaymentController extends Controller
         return Category::orderBy('title','ASC')->pluck('title', 'id');
     }   
 
+    public function status()
+    {
+        if ( auth()->user()->subscribed('main')) 
+        {
+            // view subscriber view
+            
+        } else {
+            // view non-subscriber view
+        }
+
+        return view('payments.status');
+    }
+
     public function billing()
     {
 
@@ -32,8 +44,8 @@ class PaymentController extends Controller
             return redirect( route('home') );
         }
         $availablePlans =[
-           'price_1HlGQwHhfm2rhIO6mF7GtxBl' => "Monthly [ RM5 ]",
-           'price_1HlGiRHhfm2rhIO6Z7q8PBzR' => "Yearly [ RM50 ]",
+           'price_1HlxukHhfm2rhIO6bBm0grBZ' => "Monthly [ RM5 ]",
+           'price_1HlxukHhfm2rhIO6o5KUBIWU' => "Yearly [ RM50 ]",
         ];
         $data = [
             'intent' => auth()->user()->createSetupIntent(),
@@ -45,6 +57,7 @@ class PaymentController extends Controller
     public function subscribe(Request $request)
     {
         $user = auth()->user();
+        //$user->createAsStripeCustomer();
         $paymentMethod = $request->payment_method;
 
         $planId = $request->plan;
@@ -56,5 +69,20 @@ class PaymentController extends Controller
         ]);
 
     }    
+
+    public function cancel(Request $request)
+    {
+        $user = auth()->user();
+        $user->subscription('main')->cancel();
+   
+        return redirect()->route('payment.status')->with('success','Subscription cancelled.');
+    }
+
+    public function resume(Request $request)
+    {
+        $user = auth()->user();
+        $user->subscription('main')->resume();
+        return redirect()->route('payment.status')->with('success','Subscription resumed.');
+    }
 
 }

@@ -42,10 +42,11 @@
         <div class="col-md-8">
             <div class="card bg-dark text-white">
                 <div class="card-header"><h1>Choose Subscription Plan</h2></div>
-
+{{--
                 <div class="card-body text-dark" style="background-color:#999999">
                 <img class="img-thumbnail" src="/src/poster/credit_cards.png" />
                 </div>
+                --}}
 
                 <div class="card-body text-dark" style="background-color:#999999">
                     @if (session('status'))
@@ -77,7 +78,7 @@
                     <div class="mt-2" id="card-element"></div>
                     <div class="bg-dark text-white text-md mt-1" ><p class="ml-2" id="error"></p></div>
 
-                    <button class="mt-2 btn btn-primary" id="card-button" data-secret="{{ $intent->client_secret }}">
+                    <button  class="mt-2 btn btn-primary" id="card-button" data-secret="{{ $intent->client_secret }}">
                         Subscribe
                     </button>
                 </div>
@@ -113,12 +114,15 @@
                     }
                 );
 
+
                 if (error) {
                     // Display "error.message" to the user...
                     console.log(error.message);
                     document.getElementById('error').innerHTML = error.message;
+        
 
                 } else {
+
                     // The card has been verified successfully...
                     console.log('handling success', setupIntent.payment_method);
 

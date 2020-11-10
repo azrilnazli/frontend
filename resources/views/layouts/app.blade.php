@@ -93,6 +93,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                               
+                                    <a class="dropdown-item" href="{{ route('payment.status') }}">
+                                    <i class="fas fa-edit"></i> {{ __('Subscription') }}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('profile.index') }}">
                                     <i class="fas fa-user"></i> {{ __('Profile') }}
                                     </a>
