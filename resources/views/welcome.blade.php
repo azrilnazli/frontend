@@ -28,7 +28,7 @@
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
 
             <div class="wrapper container-fluid ">
-            <h1>NURFLIXTV</h1>
+            <h1>{{ config('app.name', 'Laravel') }}</h1>
             @if (Route::has('login'))
                 <div class="px-6  sm:block">
                     @auth

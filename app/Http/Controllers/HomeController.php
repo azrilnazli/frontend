@@ -49,6 +49,16 @@ class HomeController extends Controller
         return view('by_category')->with(compact('data'));
     }
 
+    public function mobile()
+    {
+        $data = Video::where('is_published', '=', 1)
+        ->orderBy('created_at','desc')
+        ->paginate(1);
+
+        return view('mobile', compact('data'));
+    }
+
+
     /**
      * Video playback based on passed {id}.
      *

@@ -24,6 +24,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/play/{id}', [App\Http\Controllers\HomeController::class, 'play'])->name('play');
 Route::get('/by_category/{id}', [App\Http\Controllers\HomeController::class, 'by_category'])->name('by_category');
+Route::get('/mobile', [App\Http\Controllers\HomeController::class, 'mobile'])->name('mobile');
 
 
 Route::resource('profile','App\Http\Controllers\ProfileController');
@@ -35,6 +36,8 @@ Route::post('/subscribe', [App\Http\Controllers\PaymentController::class, 'subsc
 Route::get('/status', [App\Http\Controllers\PaymentController::class, 'status'])->name('payment.status');
 Route::post('/cancel', [App\Http\Controllers\PaymentController::class, 'cancel'])->name('payment.cancel');
 Route::post('/resume', [App\Http\Controllers\PaymentController::class, 'resume'])->name('payment.resume');
+
+
 
 use Illuminate\Http\Request;
 

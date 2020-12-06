@@ -51,9 +51,10 @@ class PaymentController extends Controller
             // redirect to home
             return redirect( route('home') );
         }
+
         $availablePlans =[
-           'price_1HlxukHhfm2rhIO6bBm0grBZ' => "Monthly [ RM5 ]",
-           'price_1HlxukHhfm2rhIO6o5KUBIWU' => "Yearly [ RM50 ]",
+           'price_1HlxukHhfm2rhIO6bBm0grBZ' => "Yearly [ RM50.00 ]",
+           //'price_1HniPsHhfm2rhIO66TDeNjrN' => "Monthly [ RM5.00 ]",
         ];
         $data = [
             'intent' => auth()->user()->createSetupIntent(),
@@ -66,14 +67,16 @@ class PaymentController extends Controller
     {
         $user = auth()->user();
         //$user->createAsStripeCustomer();
+        
         $paymentMethod = $request->payment_method;
 
         $planId = $request->plan;
+        
         $user->newSubscription('main', $planId)->create($paymentMethod);
 
         return response([
             'success_url'=> redirect()->intended('/')->getTargetUrl(),
-            'message'=>'success'
+            'message'=> 'Your subscription is success'
         ]);
 
     }    

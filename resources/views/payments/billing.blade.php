@@ -42,11 +42,11 @@
         <div class="col-md-8">
             <div class="card bg-dark text-white">
                 <div class="card-header"><h1>Choose Subscription Plan</h2></div>
-{{--
+
                 <div class="card-body text-dark" style="background-color:#999999">
                 <img class="img-thumbnail" src="/src/poster/credit_cards.png" />
                 </div>
-                --}}
+           
 
                 <div class="card-body text-dark" style="background-color:#999999">
                     @if (session('status'))
@@ -103,9 +103,17 @@
             const cardHolderName = document.getElementById('card-holder-name');
             const cardButton = document.getElementById('card-button');
             const clientSecret = cardButton.dataset.secret;
-            const plan = document.getElementById('subscription-plan').value;
+
+
+            var e = document.getElementById("subscription-plan");
+            var value = e.options[e.selectedIndex].value;
+            //var text = e.options[e.selectedIndex].text;
+
+            const plan = e.options[e.selectedIndex].value;
+            //const plan = document.getElementById('subscription-plan').value;
 
             cardButton.addEventListener('click', async (e) => {
+                cardButton.disabled = true;
                 const { setupIntent, error } = await stripe.handleCardSetup(
                     clientSecret, cardElement, {
                         payment_method_data: {
@@ -116,6 +124,7 @@
 
 
                 if (error) {
+                    cardButton.disabled = false;
                     // Display "error.message" to the user...
                     console.log(error.message);
                     document.getElementById('error').innerHTML = error.message;
