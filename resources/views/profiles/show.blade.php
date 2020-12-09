@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.streamit')
 
-@section('content')
+@section('content-original')
 <div class="container">
     
     <nav aria-label="breadcrumb">
@@ -26,3 +26,65 @@
 </div>   
 
 @endsection    
+
+@section('content')
+<section class="m-profile manage-p">
+        <div class="container h-100">
+            <div class="row align-items-center justify-content-center h-100">
+                <div class="col-lg-10">
+                    <div class="sign-user_card">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <div class="upload_profile d-inline-block">
+                                    @if(file_exists( public_path().'/thumbnails/avatar-'. auth()->user()->id . '.png' ))
+                                    <img src="{{ '/thumbnails/avatar-'. auth()->user()->id . '.png?id=' . microtime()  }}" class="profile-pic rounded-circle img-fluid" alt="user">
+                                    @else
+                                    <img src="/images/user/user.jpg" class="profile-pic rounded-circle img-fluid" alt="user">
+                                    @endif
+
+
+                            
+                                </div>
+                            </div>
+                            <div class="col-lg-10 device-margin">
+                                <div class="profile-from">
+                                    <h4 class="mb-3">Profile for  {{ auth()->user()->name }}</h4>
+                                    
+                                    <table class="table-borderless">
+                                        <tr>
+                                            <td  scope="col"><strong>User Level</strong></td>
+                                            <td style="width:30px"></td>
+                                            <td  scope="col"> {{ auth()->user()->role }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td  scope="col"><strong>Email</strong></td>
+                                            <td  style="width:30px"></td>
+                                            <td  scope="col"> {{ auth()->user()->email }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td  scope="col"><strong>Address</strong></td>
+                                            <td  style="width:30px"></td>
+                                            <td  scope="col">{!! nl2br(e($profile->address)) !!}</td>
+                                        </tr>
+
+                                        <tr>
+                                        <td  scope="col"><strong>Member Since</strong></td>
+                                        <td style="width:30px"></td>
+                                        <td  scope="col">{{ \Carbon\Carbon::parse(auth()->user()->created_at)->diffForHumans() }}</td>
+                                        </tr>
+
+                                    </table>
+
+                                    <a href="{{ route('profile.edit',  auth()->user()->id  ) }}"  class="btn btn-hover">Edit</a>                                                            
+                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+@endSection

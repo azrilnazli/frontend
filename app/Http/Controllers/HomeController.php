@@ -17,8 +17,8 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth','check-subscription']);
-
+        //$this->middleware(['auth','check-subscription']);
+        $this->middleware('auth');
         // menu
   
         $categories = $this->getCategories();
@@ -37,7 +37,7 @@ class HomeController extends Controller
           $row[1] =  Video::where('is_published', 1)->orderBy('id','DESC')->skip(0)->take( $video_per_row)->get();
           $row[2] =  Video::where('is_published', 1)->orderBy('id','DESC')->skip( $video_per_row)->take( $video_per_row)->get();
           
-          return view('home')->with(compact('row'));
+          return view('welcome')->with(compact('row'));
     }
 
     public function by_category($id)

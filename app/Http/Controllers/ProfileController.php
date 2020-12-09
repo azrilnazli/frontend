@@ -168,7 +168,7 @@ class ProfileController extends Controller
                 'password'  => bcrypt($request->password),
             ]);
 
-            return redirect( route('profile.change_password') )
+            return redirect( route('change_password') )
             ->with('status', 'Password updated!');
     }    
 

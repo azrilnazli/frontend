@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en-US">
    <head>
@@ -27,11 +28,10 @@
       <!-- Header -->
        @include('parts/header')
       <!-- Header End -->
-      <!-- Slider Start -->
-      @include('parts/slider')
-      <!-- Slider End -->
+    
+
       <!-- MainContent -->
-      @include('parts/main_content')
+      @yield('content')
       <!-- MainContent End-->
 
       <!-- Footer -->

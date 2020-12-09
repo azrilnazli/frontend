@@ -1,65 +1,79 @@
-@extends('layouts.app')
+@extends('auth.app')
 
 @section('content')
-<div class="container ">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card bg-dark text-white">
-                <div class="card-header">{{ __('Reset Password') }}</div>
-
-                <div class="card-body">
+<!-- MainContent -->
+<section class="sign-in-page">
+   <div class="container">
+      <div class="row justify-content-center align-items-center height-self-center">
+         <div class="col-lg-5 col-md-12 align-self-center">
+            <div class="sign-user_card ">                    
+               <div class="sign-in-page-data">
+                  <div class="sign-in-from w-100 m-auto">
+                    <h3 class="mb-3 text-center">Reset Password</h3>
+                    <p class="text-body">Enter your email address and we'll send you an email with instructions to reset your password.</p>
+                
                     <form method="POST" action="{{ route('password.update') }}">
-                        @csrf
+                    @csrf
 
-                        <input type="hidden" name="token" value="{{ $token }}">
+                    <input type="hidden" name="token" value="{{ $token }}">
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                        <div class="form-group">                                 
+              
+                           <input 
+                              type="text" 
+                              class="form-control mb-0 @error('email') is-invalid @enderror text-primary" 
+                              id="email" 
+                              name="email" 
+                              
+                              value="{{ $email ?? old('email') }}"
+                              placeholder="Enter Valid Email"
+                              readonly 
+                              required autocomplete="off">
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                              @error('email')
+                                    <p class="text-warning">{{ $message }}</p>
+                              @enderror
                         </div>
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                        <div class="form-group">                                 
+               
+                           <input 
+                              type="password" 
+                              class="form-control mb-0 @error('password') is-invalid @enderror" 
+                              id="password" 
+                              name="password" 
+                              placeholder="Enter Your Password"
+                              required>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                              @error('password')
+                                    <p class="text-warning">{{ $message }}</p>
+                              @enderror
                         </div>
 
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
+                        <div class="form-group">                                 
+               
+                           <input 
+                              type="password" 
+                              class="form-control mb-0 @error('password') is-invalid @enderror" 
+                              id="password-confirm" 
+                              name="password_confirmation" 
+                              placeholder="Confirm Password"
+                              required>
                         </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
-                        </div>
+                        <button type="submit" class="btn btn-hover">Reset Password</button>
+
                     </form>
-                </div>
+
+                  </div>
+               </div>                    
             </div>
-        </div>
-    </div>
-</div>
+         </div>
+      </div>
+      <!-- Sign in END -->
+      <!-- color-customizer -->
+   </div>
+</section>
+<!-- MainContent End-->
+
 @endsection
