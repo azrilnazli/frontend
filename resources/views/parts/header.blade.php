@@ -13,7 +13,7 @@
                               <span class="navbar-menu-icon navbar-menu-icon--bottom"></span>
                            </div>
                         </a>
-                        <a class="navbar-brand" href="index.html"> <img class="img-fluid logo" src="/images/logo.png"
+                        <a class="navbar-brand" href="{{ route('home') }}"> <img class="img-fluid logo" src="/images/logo.png"
                            alt="streamit" /> </a>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                            <div class="menu-main-menu-container">
@@ -41,6 +41,7 @@
                            <div class="more-menu" aria-labelledby="dropdownMenuButton">
                               <div class="navbar-right position-relative">
                                  <ul class="d-flex align-items-center justify-content-end list-inline m-0">
+                                   {{--
                                     <li>
                                        <a href="#" class="search-toggle">
                                        <i class="ri-search-line"></i>
@@ -55,6 +56,8 @@
                                           </form>
                                        </div>
                                     </li>
+
+                                    --}}
                                     <li class="nav-item nav-icon">
                                        <a href="#" class="search-toggle position-relative">
                                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22"
@@ -73,7 +76,7 @@
                                                       <img src="/images/notify/thumb-1.jpg" class="img-fluid mr-3"
                                                          alt="streamit" />
                                                       <div class="media-body">
-                                                         <h6 class="mb-0 ">Boop Bitty</h6>
+                                                         <h6 class="mb-0 ">Booppoy Bitty</h6>
                                                          <small class="font-size-12"> just now</small>
                                                       </div>
                                                    </div>

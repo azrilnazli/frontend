@@ -24,6 +24,7 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('root');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/play/{id}', [App\Http\Controllers\HomeController::class, 'play'])->name('play');
+Route::get('/show_details/{id}', [App\Http\Controllers\HomeController::class, 'show_details'])->name('show_details');
 Route::get('/by_category/{id}', [App\Http\Controllers\HomeController::class, 'by_category'])->name('by_category');
 Route::get('/mobile', [App\Http\Controllers\HomeController::class, 'mobile'])->name('mobile');
 

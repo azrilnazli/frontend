@@ -33,11 +33,15 @@ class HomeController extends Controller
     public function index()
     {
         // list all latest videos limit by 24
-        $video_per_row = 9;
-          $row[1] =  Video::where('is_published', 1)->orderBy('id','DESC')->skip(0)->take( $video_per_row)->get();
-          $row[2] =  Video::where('is_published', 1)->orderBy('id','DESC')->skip( $video_per_row)->take( $video_per_row)->get();
+          //$video_per_row = 9;
+          //$row[1] =  Video::where('is_published', 1)->orderBy('id','DESC')->skip(0)->take( $video_per_row)->get();
+          //$row[2] =  Video::where('is_published', 1)->orderBy('id','DESC')->skip( $video_per_row)->take( $video_per_row)->get();
+          //return view('home.index')->with(compact('row'));
           
-          return view('welcome')->with(compact('row'));
+          $trailers = Video::where('is_published', 1)->orderBy('id','DESC')->skip(0)->take(6)->get();
+          $latest   =  Video::where('is_published', 1)->orderBy('id','DESC')->skip(0)->take(50)->get();
+          return view('home.index')->with(compact('latest','trailers'));
+          
     }
 
     public function by_category($id)
@@ -58,12 +62,15 @@ class HomeController extends Controller
         return view('mobile', compact('data'));
     }
 
+    public function show_details($id)
+    {
 
-    /**
-     * Video playback based on passed {id}.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
+        $video =  Video::find($id);
+        $latest =  Video::where('is_published', 1)->orderBy('id','DESC')->skip(0)->take(50)->get();
+        return view('/play/index',compact('video','latest'));
+
+    }
+
     public function play($id)
     {
         $video =  Video::find($id);
