@@ -32,6 +32,20 @@ class ProfileController extends Controller
         View::share('categories', $categories);
     }
 
+
+    public function settings()
+    {
+        $profile = Profile::where( 'user_id', '=', Auth::user()->id )->first();
+      
+        if(!$profile){
+            return redirect( route('profile.create') );
+        }
+    
+        // display the profile for loggedin user
+        $profile = User::find( Auth::user()->id )->profile;
+        return view('/settings/index')->with(compact('profile'));
+    }
+
     public function show()
     {
         return view('profiles.change_password');

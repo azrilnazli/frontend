@@ -80,15 +80,17 @@ class HomeController extends Controller
         return Category::orderBy('title','ASC')->pluck('title', 'id');
     }   
 
+    public function settings()
+    {
+        return view('/settings/index');
+    }
+
     public function search(Request $request)
     {
         $query = $request->input('query');
         // Starts with 'foo', ends with anything
         //$results = Post::where('title', 'like', "{$keyword}%")->get()
 
-   
-        
-        
         $latest = Video::where([['title', 'like', "{$query}%"]])
                 ->orWhere([['description', 'like', "{$query}%"]])
                 ->paginate(10)->setPath('videos');

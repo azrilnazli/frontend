@@ -30,6 +30,7 @@ Route::get('/mobile', [App\Http\Controllers\HomeController::class, 'mobile'])->n
 Route::post('/search', [App\Http\Controllers\HomeController::class, 'search'])->name('search');
 
 
+Route::get('/settings', [App\Http\Controllers\ProfileController::class, 'settings'])->name('settings');
 Route::resource('profile','App\Http\Controllers\ProfileController');
 Route::get('/change_password', [App\Http\Controllers\ProfileController::class, 'change_password'])->name('change_password');
 Route::post('/update_password', [App\Http\Controllers\ProfileController::class, 'update_password'])->name('update_password');

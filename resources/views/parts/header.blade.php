@@ -167,7 +167,7 @@
                                                 </div>
                                              </div>
                                           </a>
-                                          <a href="{{ route('change_password') }}" class="iq-sub-card setting-dropdown">
+                                          <a href="{{ route('settings') }}" class="iq-sub-card setting-dropdown">
                                              <div class="media align-items-center">
                                                 <div class="right-icon">
                                                    <i class="ri-settings-4-line text-primary"></i>
