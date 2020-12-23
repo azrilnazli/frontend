@@ -43,9 +43,11 @@
                                        <i class="ri-search-line"></i>
                                        </a>
                                        <div class="search-box iq-search-bar">
-                                          <form action="#" class="searchbox">
+                                         
+                                          <form class="searchbox" action="{{ route('search') }}" method="POST">
+                                          @csrf
                                              <div class="form-group position-relative">
-                                                <input type="text" class="text search-input font-size-12"
+                                                <input name="query" type="text" class="text search-input font-size-12"
                                                    placeholder="type here to search...">
                                                 <i class="search-link ri-search-line"></i>
                                              </div>
@@ -126,13 +128,14 @@
                                  <i class="ri-search-line"></i>
                                  </a>
                                  <div class="search-box iq-search-bar d-search">
-                                    <form action="#" class="searchbox">
-                                       <div class="form-group position-relative">
-                                          <input type="text" class="text search-input font-size-12"
-                                             placeholder="type here to search...">
-                                          <i class="search-link ri-search-line"></i>
-                                       </div>
-                                    </form>
+                                 <form class="searchbox" action="{{ route('search') }}" method="POST">
+                                 @csrf
+                                    <div class="form-group position-relative">
+                                       <input name="query" type="text" class="text search-input font-size-12"
+                                          placeholder="type here to search...">
+                                       <i class="search-link ri-search-line"></i>
+                                    </div>
+                                 </form>
                                  </div>
                               </li>
 

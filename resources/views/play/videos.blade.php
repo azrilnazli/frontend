@@ -4,6 +4,15 @@
                <div class="row">
                   <div class="col-sm-12 overflow-hidden">
                      <div class="iq-main-header d-flex align-items-center justify-content-between">
+                        <h4 class="main-title">&nbsp;</h4>
+                        {{-- <a href="show-single.html" class="text-primary">View all</a> --}}
+                     </div>
+                  </div>
+               </div>
+
+               <div class="row">
+                  <div class="col-sm-12 overflow-hidden">
+                     <div class="iq-main-header d-flex align-items-center justify-content-between">
                         <h4 class="main-title">Latest Episodes</h4>
                         {{-- <a href="show-single.html" class="text-primary">View all</a> --}}
                      </div>
@@ -12,7 +21,7 @@
 
 
                <div class="row">
-
+                   
                     @foreach($latest as $video)
                     <div class="col-1-5 col-md-6 iq-mb-30">
                             <div class="epi-box">

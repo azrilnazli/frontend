@@ -64,11 +64,9 @@ class HomeController extends Controller
 
     public function show_details($id)
     {
-
         $video =  Video::find($id);
         $latest =  Video::where('is_published', 1)->orderBy('id','DESC')->skip(0)->take(50)->get();
         return view('/play/index',compact('video','latest'));
-
     }
 
     public function play($id)
@@ -81,4 +79,23 @@ class HomeController extends Controller
     {
         return Category::orderBy('title','ASC')->pluck('title', 'id');
     }   
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        // Starts with 'foo', ends with anything
+        //$results = Post::where('title', 'like', "{$keyword}%")->get()
+
+   
+        
+        
+        $latest = Video::where([['title', 'like', "{$query}%"]])
+                ->orWhere([['description', 'like', "{$query}%"]])
+                ->paginate(10)->setPath('videos');
+        
+        return view('/search/index',compact('latest'));
+    }
+
+
+    
 }
