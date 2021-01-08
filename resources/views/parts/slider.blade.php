@@ -2,7 +2,7 @@
          <div id="home-slider" class="slider m-0 p-0">
 
             @foreach($trailers as $video)
-            <div class="slide slick-bg s-bg-1" style="background-image: url('{{ config('settings.asset_server') . $video->id }}/images/file-2.png')">
+            <div class="slide slick-bg s-bg-1" style="background-image: url('{{ config('settings.asset_server') . $video->id }}/images/video-poster.png')">
                <div class="container-fluid position-relative h-100">
                   <div class="slider-inner h-100">
                      <div class="row align-items-center  h-100">

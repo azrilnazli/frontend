@@ -26,7 +26,7 @@
                     <div class="col-1-5 col-md-6 iq-mb-30">
                             <div class="epi-box">
                                 <div class="epi-img position-relative">
-                                <img src="{{ config('settings.asset_server') . $video->id }}/images/file-2-small.png" class="img-fluid img-zoom" alt="">
+                                <img src="{{ config('settings.asset_server') . $video->id }}/images/video-poster.png" class="img-fluid img-zoom" alt="">
                                 <div class="episode-number">1</div>
                                 <div class="episode-play-info">
                                     <div class="episode-play">
